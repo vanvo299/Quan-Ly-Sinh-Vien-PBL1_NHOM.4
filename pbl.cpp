@@ -25,7 +25,15 @@ void Nhap(SinhVien* x)
     getchar();
     printf("Nhap ten: "); gets(x->ten);
     printf("Nhap ma sinh vien: "); gets(x->maSV);
-    printf("Nhap gioi tinh: "); gets(x->gioiTinh);
+    printf("Chon gioi tinh: ");
+    int gt;
+    printf("1. Nam    2. Nu (Nhap 1 hoac 2): "); scanf("%d", &gt);
+    if (gt == 1) {
+        strcpy(x->gioiTinh, "Nam");
+    } else if (gt == 2) {
+        strcpy(x->gioiTinh, "Nu");
+    }
+    getchar();
     printf("Nhap lop: "); gets(x->lop);
     printf("Nhap gpa: "); scanf("%lf", &x->gpa);
     printf("Nhap can nang: "); scanf("%lf", &x->canNang);
@@ -38,44 +46,31 @@ void tinh_BMI(SinhVien *x) {
 }
 void in(SinhVien *x)
 {
-    printf("Ho va ten: %s\n", x->ten);
-    printf("Ma sinh vien: %s\n", x->maSV); 
-    printf("Gioi tinh: %s\n", x->gioiTinh);
-    printf("Lop: %s\n", x->lop);
-    printf("GPA: %.2lf\n", x->gpa);
-    printf("Can nang: %.1lf\n", x->canNang);
-    printf("Chieu cao: %.1lf\n", x->chieuCao);
     tinh_BMI(x);
-    printf("BMI: %.2lf\n\n", x->BMI);
-}
+    printf("\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t        %.2lf cm\t%.2lf\n", x->ten, x->gioiTinh, x->lop, x->gpa, x->canNang, x->chieuCao, x->BMI);
 
+
+    }
+// xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
-    
     if (outputFile) {
+        fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
+        fprintf(outputFile, "STT\tHo va ten\t                    Gioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\tBMI\n");
         for (int i = 0; i < n; i++) {
-            fprintf(outputFile, "Sinh vien %d:\n", i + 1);
-            fprintf(outputFile, "Ho va ten: %s\n", x[i].ten);
-            fprintf(outputFile, "Ma sinh vien: %s\n", x[i].maSV);
-            fprintf(outputFile, "Gioi tinh: %s\n", x[i].gioiTinh);
-            fprintf(outputFile, "Lop: %s\n", x[i].lop);
-            fprintf(outputFile, "GPA: %.2lf\n", x[i].gpa);
-            fprintf(outputFile, "Can nang: %.1lf\n", x[i].canNang);
-            fprintf(outputFile, "Chieu cao: %.1lf cm\n", x[i].chieuCao);
             tinh_BMI(&x[i]);
-            fprintf(outputFile, "BMI: %.2lf\n\n", x[i].BMI);
+            fprintf(outputFile, "%d\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t    %.2lf cm\t      %.2lf\n", i + 1, x[i].ten, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
         }
-        fclose(outputFile); 
-    } else {
-        printf("Error opening file for writing.\n");
+        fclose(outputFile);
     }
 }
-
+// tim kiem    
 void timkiem(SinhVien a[], int n, char name[])
 {
     int find = 0;
     for (int i = 0; i < n; i++) {
         if (strcmp(name, a[i].ten) == 0) {
+            printf("STT\tHo va ten\t                Gioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
             in(&a[i]);
             find = 1;
         }
@@ -93,6 +88,7 @@ void maxgpa(SinhVien a[], int n)
         max = fmax(max, a[i].gpa);
     }
     printf("Thong tin cac sinh vien co diem gpa cao nhat: \n");
+    printf("STT\tHo va ten\t                Gioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
     for (int i = 0; i < n; i++) {
         if (max == a[i].gpa) {
             in(&a[i]);
@@ -182,7 +178,8 @@ int main()
 //           qsort(a, n, sizeof(SinhVien), cmp);
         }
         else if (lc == 7) {
-            printf("Danh sach sinh vien\n");
+            printf("\t\t\tDanh sach sinh vien\t\t\t\n");
+            printf("STT\tHo va ten\t                Gioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
             for (int i = 0; i < n; i++) {
                 in(&a[i]);
             }
