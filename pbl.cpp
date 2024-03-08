@@ -1,6 +1,6 @@
 /*
-D? ÁN PBL 1: L?P TRÌNH TÍNH TOÁN
-Ch? d? 703: D? án xây d?ng chuong trình qu?n lý sinh viên
+DỰ ÁN PBL1: LẬP TRÌNH TÍNH TOÁN
+Chủ đề: Xây dựng chương trình quản lý sinh viên
 */
 #include <stdio.h>
 #include <string.h>
@@ -70,7 +70,7 @@ void xuatFile(SinhVien *x, int n) {
         printf("Error opening file for writing.\n");
     }
 }
-// S?p x?p, t?m ki?m, t?m min,max, trung b?nh....
+
 void timkiem(SinhVien a[], int n, char name[])
 {
     int find = 0;
