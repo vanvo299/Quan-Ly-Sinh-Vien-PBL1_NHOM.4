@@ -6,6 +6,7 @@ Chủ đề: Xây dựng chương trình quản lý sinh viên
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 struct SinhVien {
     char ten[100];
     char maSV[20];
@@ -18,13 +19,18 @@ struct SinhVien {
 };
 
 typedef struct SinhVien SinhVien;
-
+void taoMaSV(SinhVien *x)
+{
+    srand(time(NULL));
+    sprintf(x->maSV, "102230%d", rand() % 300 + 300);
+}
 // Nhap thong tin sinh vien va tra ve sinh vien sau khi nhap
 void Nhap(SinhVien* x)
 {
     getchar();
     printf("Nhap ten: "); gets(x->ten);
-    printf("Nhap ma sinh vien: "); gets(x->maSV);
+    taoMaSV(x);
+    // printf("Nhap ma sinh vien: "); gets(x->maSV);
     printf("Chon gioi tinh: ");
     int gt;
     printf("1. Nam    2. Nu (Nhap 1 hoac 2): "); scanf("%d", &gt);
@@ -47,7 +53,7 @@ void tinh_BMI(SinhVien *x) {
 void in(SinhVien *x)
 {
     tinh_BMI(x);
-    printf("\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t        %.2lf cm\t%.2lf\n", x->ten, x->gioiTinh, x->lop, x->gpa, x->canNang, x->chieuCao, x->BMI);
+    printf("\t%-30s\t%-10s\t%-10s\t%-10s\t%.2lf\t%.2lf\t        %.2lf cm\t%.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->gpa, x->canNang, x->chieuCao, x->BMI);
 
 
     }
@@ -56,10 +62,10 @@ void xuatFile(SinhVien *x, int n) {
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
     if (outputFile) {
         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
-        fprintf(outputFile, "STT\tHo va ten\t                    Gioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\tBMI\n");
+        fprintf(outputFile, "STT\tHo va ten\t                    Ma sinh vien\tGioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\t      BMI\n");
         for (int i = 0; i < n; i++) {
             tinh_BMI(&x[i]);
-            fprintf(outputFile, "%d\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t    %.2lf cm\t      %.2lf\n", i + 1, x[i].ten, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
+            fprintf(outputFile, "%d\t%-30s\t%-10s\t    %-10s\t%-10s\t%.2lf\t%.2lf\t    %.2lf cm\t      %.2lf\n", i + 1, x[i].ten,x[i].maSV, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
         }
         fclose(outputFile);
     }
@@ -70,7 +76,7 @@ void timkiem(SinhVien a[], int n, char name[])
     int find = 0;
     for (int i = 0; i < n; i++) {
         if (strcmp(name, a[i].ten) == 0) {
-            printf("STT\tHo va ten\t                Gioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+            printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
             in(&a[i]);
             find = 1;
         }
@@ -88,7 +94,7 @@ void maxgpa(SinhVien a[], int n)
         max = fmax(max, a[i].gpa);
     }
     printf("Thong tin cac sinh vien co diem gpa cao nhat: \n");
-    printf("STT\tHo va ten\t                Gioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+    printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
     for (int i = 0; i < n; i++) {
         if (max == a[i].gpa) {
             in(&a[i]);
@@ -179,7 +185,7 @@ int main()
         }
         else if (lc == 7) {
             printf("\t\t\tDanh sach sinh vien\t\t\t\n");
-            printf("STT\tHo va ten\t                Gioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+            printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
             for (int i = 0; i < n; i++) {
                 in(&a[i]);
             }
