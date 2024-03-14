@@ -19,17 +19,18 @@ struct SinhVien {
 };
 
 typedef struct SinhVien SinhVien;
-void taoMaSV(SinhVien *x)
-{
-    srand(time(NULL));
-    sprintf(x->maSV, "102230%d", rand() % 300 + 300);
+void taoMaSV(SinhVien *x) {
+    static int counter = 224; // Biến tĩnh để theo dõi mã sinh viên
+    sprintf(x->maSV, "102230%d", counter);
+    counter++; // Tăng giá trị mã sinh viên cho lần gọi tiếp theo
 }
+
 // Nhap thong tin sinh vien va tra ve sinh vien sau khi nhap
 void Nhap(SinhVien* x)
 {
     getchar();
     printf("Nhap ten: "); gets(x->ten);
-    taoMaSV(x);
+    // taoMaSV(x);
     // printf("Nhap ma sinh vien: "); gets(x->maSV);
     printf("Chon gioi tinh: ");
     int gt;
@@ -59,6 +60,12 @@ void in(SinhVien *x)
     }
 // xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
+    for (int i = 0; i < n; i++) {
+        if (strlen(x[i].maSV) == 0) {
+            printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+            return;
+            }  
+        }
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
     if (outputFile) {
         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
@@ -70,12 +77,12 @@ void xuatFile(SinhVien *x, int n) {
         fclose(outputFile);
     }
 }
-// tim kiem    
-void timkiem(SinhVien a[], int n, char name[])
-{
+// tim kiem theo ten
+void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
     for (int i = 0; i < n; i++) {
-        if (strcmp(name, a[i].ten) == 0) {
+        // Sử dụng strstr để kiểm tra tên có xuất hiện trong tên sinh viên không
+        if (strstr(a[i].ten, name) != NULL) {
             printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
             in(&a[i]);
             find = 1;
@@ -86,6 +93,21 @@ void timkiem(SinhVien a[], int n, char name[])
     }
 }
 
+// tim kiem theo ma SV
+void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
+{
+    int find = 0;
+    for (int i = 0; i < n; i++) {
+        if (strcmp(ID, a[i].maSV) == 0) {
+            printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+            in(&a[i]);
+            find = 1;
+        }
+    }
+    if (find == 0) {
+        printf("Khong tim thay sinh vien\n");
+    }
+}
 // In ra nhung sinh vien co diem gpa cao nhat
 void maxgpa(SinhVien a[], int n)
 {
@@ -102,9 +124,9 @@ void maxgpa(SinhVien a[], int n)
     }
 }
 // xoa sinh vien theo ten
-void xoaThongTin(SinhVien a[], int* n, char name[]) {
+void xoaThongTin(SinhVien a[], int* n, char ID[]) {
     for (int i = 0; i < *n; i++) {
-        if (strcmp(a[i].ten, name) == 0) {
+        if (strcmp(a[i].maSV, ID) == 0) {
             for (int j = i; j < *n - 1; j++) {
                 a[j] = a[j + 1];
             }
@@ -142,12 +164,13 @@ int main()
     while (1) {
         printf("-------------------QUAN LY SINH VIEN-------------------\n\n");
         printf("1. Nhap danh sach sinh vien\n");
-        printf("2. Xuat file danh sach sinh vien\n");
-        printf("3. Tim kiem sinh vien theo ten\n");
+        printf("2. Cap ma sinh vien\n");
+        printf("3. Tim kiem sinh vien\n");
         printf("4. Liet ke sinh vien co diem cao nhat\n");
-        printf("5. Xoa sinh vien theo ten\n");
+        printf("5. Xoa sinh vien theo ma sinh vien\n");
         printf("6. Sap xep sinh vien theo gpa giam dan\n");
         printf("7. Hien thi danh sach sinh vien\n");
+        printf("8. Xuat file danh sach sinh vien\n");
         printf("0. Thoat !\n");
         printf("-------------------------------------------------------\n\n");
         printf("Nhap lua chon: ");
@@ -160,36 +183,64 @@ int main()
             }
         }
         else if (lc == 2) {
-          xuatFile(a, n); 
+            for (int i = 0; i < n; i++) {
+                taoMaSV(&a[i]);
+            }
         }
         else if (lc == 3) {
-            char name[100];
-            printf("Nhap ten sinh vien can tim kiem: ");
-            getchar();
-            gets(name);
-            timkiem(a, n, name);
+            int choice;
+            printf("1. Tim kiem sinh vien theo ten sinh vien\n");
+            printf("2. Tim Kiem sinh vien theo ma sinh vien\n\n");
+            printf("Vui long chon lua chon cua ban: "); scanf("%d", &choice);
+            if (choice == 1) {
+                char name[100];
+                printf("Nhap ten sinh vien can tim kiem: ");
+                getchar();
+                gets(name);
+                timKiemTheoTen(a, n, name);
+            } else if (choice == 2) {
+                printf("Nhap ma cua sinh vien can tim kiem: ");
+                char ID[20];
+                getchar();
+                gets(ID);
+                timKiemTheoMaSV(a, n, ID);
+            }
         }
         else if (lc == 4) {
             maxgpa(a, n);
         }
         else if (lc == 5) {
-            char name[100];
-            printf("Nhap ten danh sach sinh vien can xoa: "); 
+            char ID[20];
+            printf("Nhap ma sinh vien can xoa: "); 
             getchar();
-            gets(name);
-            xoaThongTin(a, &n, name);
+            gets(ID);
+            xoaThongTin(a, &n, ID);
         }
         else if (lc == 6) {
            sapxep(a, n);
 //           qsort(a, n, sizeof(SinhVien), cmp);
         }
         else if (lc == 7) {
+            int temp = 0;
+        for (int i = 0; i < n; i++) {
+        if (strlen(a[i].maSV) == 0) {
+            printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+            temp = 1;
+            }  
+        }
+        if (temp == 0) {
             printf("\t\t\tDanh sach sinh vien\t\t\t\n");
             printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
             for (int i = 0; i < n; i++) {
                 in(&a[i]);
             }
         }
+        }
+        else if (lc == 8) {
+            printf("Da xuat danh sach sinh vien ra file\n");
+          xuatFile(a, n); 
+        }
+       
         else if (lc == 0) {
             break;
         }
