@@ -136,7 +136,7 @@ void maxgpa(SinhVien a[], int n)
         }
     }
 }
-// xoa sinh vien theo ten
+// xoa sinh vien theo ten (chi can ten)
 void xoaThongTin(SinhVien a[], int* n, char ID[]) {
     for (int i = 0; i < *n; i++) {
         if (strcmp(a[i].maSV, ID) == 0) {
