@@ -27,6 +27,7 @@ void taoMaSV(SinhVien *x) {
     sprintf(x->maSV, "102230%d", counter);
     counter++; 
 }
+
 // ham cap email cho sinh vien
 void capEmail(SinhVien *x) 
 {
@@ -54,16 +55,17 @@ void Nhap(SinhVien* x)
     printf("\n");
 }
 
+// ham tinh BMI
 void tinh_BMI(SinhVien *x) { 
     double chieuCao_meters = x->chieuCao / 100.0;
     x->BMI = x->canNang / pow(chieuCao_meters, 2);
 }
 
+// ham in thong tin sinh vien
 void in(SinhVien *x)
 {
     tinh_BMI(x);
     printf("\t%-30s\t%-10s\t%-10s\t%-10s\t%.2lf\t%.2lf\t        %.2lf cm\t%.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->gpa, x->canNang, x->chieuCao, x->BMI);
-
 
 }
 
