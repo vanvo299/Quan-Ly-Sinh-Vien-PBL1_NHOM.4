@@ -20,22 +20,25 @@ struct SinhVien {
 };
 
 typedef struct SinhVien SinhVien;
+
+// ham cap ma sinh vien 
 void taoMaSV(SinhVien *x) {
-    static int counter = 224; // Biến tĩnh để theo dõi mã sinh viên
+    static int counter = 224; 
     sprintf(x->maSV, "102230%d", counter);
-    counter++; // Tăng giá trị mã sinh viên cho lần gọi tiếp theo
+    counter++; 
 }
+
+// ham cap email cho sinh vien
 void capEmail(SinhVien *x) 
 {
     sprintf(x->email, "%s@sv1.dut.udn.vn", x->maSV);
 }
+
 // Nhap thong tin sinh vien va tra ve sinh vien sau khi nhap
 void Nhap(SinhVien* x)
 {
     getchar();
     printf("Nhap ten: "); gets(x->ten);
-    // taoMaSV(x);
-    // printf("Nhap ma sinh vien: "); gets(x->maSV);
     printf("Chon gioi tinh: ");
     int gt;
     printf("1. Nam    2. Nu (Nhap 1 hoac 2): "); scanf("%d", &gt);
@@ -51,59 +54,44 @@ void Nhap(SinhVien* x)
     printf("Nhap chieu cao: "); scanf("%lf", &x->chieuCao);
     printf("\n");
 }
+
+// ham tinh BMI
 void tinh_BMI(SinhVien *x) { 
     double chieuCao_meters = x->chieuCao / 100.0;
     x->BMI = x->canNang / pow(chieuCao_meters, 2);
 }
+
+// ham in thong tin sinh vien
 void in(SinhVien *x)
 {
     tinh_BMI(x);
     printf("\t%-30s\t%-10s\t%-10s\t%-10s\t%.2lf\t%.2lf\t        %.2lf cm\t%.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->gpa, x->canNang, x->chieuCao, x->BMI);
 
+}
 
-    }
 // xuat danh sach sinh vien ra file   
-// void xuatFile(SinhVien *x, int n) {
-//     for (int i = 0; i < n; i++) {
-//         if (strlen(x[i].maSV) == 0) {
-//             printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
-//             return;
-//         }
-//     }
-
-//     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
-//     if (outputFile) {
-//         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
-//         fprintf(outputFile, "STT\t    Ho va ten\t       Ma sinh vien\tEmail\tGioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\t      BMI\n");
-
-//         for (int i = 0; i < n; i++) {
-//             tinh_BMI(&x[i]);
-//             fprintf(outputFile, "%-3d\t%-30s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t%-10.2lf cm\t%.2lf\n",
-//                     i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
-//         }
-
-//         fclose(outputFile);
-//     }
-// }
-
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
         if (strlen(x[i].maSV) == 0) {
             printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
             return;
-            }  
         }
+    }
+
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
     if (outputFile) {
         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
         fprintf(outputFile, "STT\t    Ho va ten\t       Ma sinh vien\tEmail\tGioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\t      BMI\n");
+
         for (int i = 0; i < n; i++) {
             tinh_BMI(&x[i]);
-            fprintf(outputFile, "%d\t    %-30s\t%s\t%-30s\t    %-10s\t%-10s\t%.2lf\t%.2lf\t    %.2lf cm\t      %.2lf\n", i + 1, x[i].ten,x[i].maSV,x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
+            fprintf(outputFile, "%-3d\t%-30s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t%-10.2lf cm\t%.2lf\n",
+                    i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
         }
         fclose(outputFile);
     }
 }
+
 // tim kiem theo ten
 void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
@@ -135,7 +123,7 @@ void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
         printf("Khong tim thay sinh vien\n");
     }
 }
-// In ra nhung sinh vien co diem gpa cao nhat
+// Tim sinh vien co GPA cao nhat trong danh sach
 void maxgpa(SinhVien a[], int n)
 {
     double max = 0;
@@ -150,7 +138,7 @@ void maxgpa(SinhVien a[], int n)
         }
     }
 }
-// xoa sinh vien theo ten
+// xoa sinh vien theo ten (chi can ten)
 void xoaThongTin(SinhVien a[], int* n, char ID[]) {
     for (int i = 0; i < *n; i++) {
         if (strcmp(a[i].maSV, ID) == 0) {
@@ -177,19 +165,12 @@ void sapxep(SinhVien a[], int n)
         a[i] = temp;
     }
 }
-// Sap xep quicksort
-int cmp(const void* a, const void* b)
-{
-    SinhVien* x = (SinhVien*)a;
-    SinhVien* y = (SinhVien*)b;
-    return y->gpa - x->gpa;
-}
 int main()
 {
     SinhVien a[1000];
     int n;
     while (1) {
-        printf("-------------------QUAN LY SINH VIEN-------------------\n\n");
+        printf("------------------------QUAN LY SINH VIEN------------------------\n\n");
         printf("1. Nhap danh sach sinh vien\n");
         printf("2. Cap ma sinh vien\n");
         printf("3. Cap email sinh vien\n");
@@ -200,9 +181,10 @@ int main()
         printf("8. Hien thi danh sach sinh vien\n");
         printf("9. Xuat file danh sach sinh vien\n");
         printf("0. Thoat !\n");
-        printf("-------------------------------------------------------\n\n");
+        printf("-----------------------------------------------------------------\n\n");
         printf("Nhap lua chon: ");
-        int lc; scanf("%d", &lc);
+        int lc; 
+        scanf("%d", &lc);
         if (lc == 1) {
             printf("Nhap so luong sinh vien: "); scanf("%d", &n);
             for (int i = 0; i < n; i++) {
@@ -260,7 +242,6 @@ int main()
         }
         else if (lc == 7) {
            sapxep(a, n);
-//           qsort(a, n, sizeof(SinhVien), cmp);
         }
         else if (lc == 8) {
             int temp = 0;
@@ -282,10 +263,13 @@ int main()
             printf("Da xuat danh sach sinh vien ra file\n");
           xuatFile(a, n); 
         }
-        
         else if (lc == 0) {
             break;
         }
     }
     return 0;
 }
+/*
+f8ehfwef9wehwhgewngugbnsdjgas
+gháduighasgn
+*/
