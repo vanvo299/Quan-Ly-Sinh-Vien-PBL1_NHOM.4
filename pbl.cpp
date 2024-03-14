@@ -21,10 +21,11 @@ struct SinhVien {
 
 typedef struct SinhVien SinhVien;
 void taoMaSV(SinhVien *x) {
-    static int counter = 224; // Biến tĩnh để theo dõi mã sinh viên
+    static int counter = 224; 
     sprintf(x->maSV, "102230%d", counter);
-    counter++; // Tăng giá trị mã sinh viên cho lần gọi tiếp theo
+    counter++; 
 }
+// ham cap email cho sinh vien
 void capEmail(SinhVien *x) 
 {
     sprintf(x->email, "%s@sv1.dut.udn.vn", x->maSV);
@@ -35,8 +36,6 @@ void Nhap(SinhVien* x)
 {
     getchar();
     printf("Nhap ten: "); gets(x->ten);
-    // taoMaSV(x);
-    // printf("Nhap ma sinh vien: "); gets(x->maSV);
     printf("Chon gioi tinh: ");
     int gt;
     printf("1. Nam    2. Nu (Nhap 1 hoac 2): "); scanf("%d", &gt);
@@ -85,7 +84,6 @@ void xuatFile(SinhVien *x, int n) {
             fprintf(outputFile, "%-3d\t%-30s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t%-10.2lf cm\t%.2lf\n",
                     i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
         }
-
         fclose(outputFile);
     }
 }
@@ -163,13 +161,6 @@ void sapxep(SinhVien a[], int n)
         a[i] = temp;
     }
 }
-// Sap xep quicksort
-int cmp(const void* a, const void* b)
-{
-    SinhVien* x = (SinhVien*)a;
-    SinhVien* y = (SinhVien*)b;
-    return y->gpa - x->gpa;
-}
 int main()
 {
     SinhVien a[1000];
@@ -246,7 +237,6 @@ int main()
         }
         else if (lc == 7) {
            sapxep(a, n);
-//           qsort(a, n, sizeof(SinhVien), cmp);
         }
         else if (lc == 8) {
             int temp = 0;
