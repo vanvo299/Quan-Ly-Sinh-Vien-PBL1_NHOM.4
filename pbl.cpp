@@ -121,7 +121,7 @@ void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
         printf("Khong tim thay sinh vien\n");
     }
 }
-// In ra nhung sinh vien co diem gpa cao nhat
+// Tim sinh vien co GPA cao nhat trong danh sach
 void maxgpa(SinhVien a[], int n)
 {
     double max = 0;
