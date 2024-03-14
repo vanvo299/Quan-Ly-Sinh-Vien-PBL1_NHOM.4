@@ -181,7 +181,8 @@ int main()
         printf("0. Thoat !\n");
         printf("-----------------------------------------------------------------\n\n");
         printf("Nhap lua chon: ");
-        int lc; scanf("%d", &lc);
+        int lc; 
+        scanf("%d", &lc);
         if (lc == 1) {
             printf("Nhap so luong sinh vien: "); scanf("%d", &n);
             for (int i = 0; i < n; i++) {
@@ -260,7 +261,6 @@ int main()
             printf("Da xuat danh sach sinh vien ra file\n");
           xuatFile(a, n); 
         }
-        
         else if (lc == 0) {
             break;
         }
