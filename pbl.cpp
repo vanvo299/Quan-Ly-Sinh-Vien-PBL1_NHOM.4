@@ -269,7 +269,3 @@ int main()
     }
     return 0;
 }
-/*
-f8ehfwef9wehwhgewngugbnsdjgas
-gháduighasgn
-*/
