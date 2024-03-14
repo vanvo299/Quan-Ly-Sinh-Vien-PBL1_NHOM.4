@@ -29,6 +29,7 @@ void capEmail(SinhVien *x)
 {
     sprintf(x->email, "%s@sv1.dut.udn.vn", x->maSV);
 }
+
 // Nhap thong tin sinh vien va tra ve sinh vien sau khi nhap
 void Nhap(SinhVien* x)
 {
@@ -51,17 +52,20 @@ void Nhap(SinhVien* x)
     printf("Nhap chieu cao: "); scanf("%lf", &x->chieuCao);
     printf("\n");
 }
+
 void tinh_BMI(SinhVien *x) { 
     double chieuCao_meters = x->chieuCao / 100.0;
     x->BMI = x->canNang / pow(chieuCao_meters, 2);
 }
+
 void in(SinhVien *x)
 {
     tinh_BMI(x);
     printf("\t%-30s\t%-10s\t%-10s\t%-10s\t%.2lf\t%.2lf\t        %.2lf cm\t%.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->gpa, x->canNang, x->chieuCao, x->BMI);
 
 
-    }
+}
+
 // xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
