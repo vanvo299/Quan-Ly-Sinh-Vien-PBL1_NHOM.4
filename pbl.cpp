@@ -20,6 +20,8 @@ struct SinhVien {
 };
 
 typedef struct SinhVien SinhVien;
+
+// ham cap ma sinh vien 
 void taoMaSV(SinhVien *x) {
     static int counter = 224; 
     sprintf(x->maSV, "102230%d", counter);
