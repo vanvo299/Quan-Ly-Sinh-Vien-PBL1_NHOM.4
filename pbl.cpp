@@ -63,47 +63,47 @@ void in(SinhVien *x)
 
     }
 // xuat danh sach sinh vien ra file   
-// void xuatFile(SinhVien *x, int n) {
-//     for (int i = 0; i < n; i++) {
-//         if (strlen(x[i].maSV) == 0) {
-//             printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
-//             return;
-//         }
-//     }
-
-//     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
-//     if (outputFile) {
-//         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
-//         fprintf(outputFile, "STT\t    Ho va ten\t       Ma sinh vien\tEmail\tGioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\t      BMI\n");
-
-//         for (int i = 0; i < n; i++) {
-//             tinh_BMI(&x[i]);
-//             fprintf(outputFile, "%-3d\t%-30s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t%-10.2lf cm\t%.2lf\n",
-//                     i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
-//         }
-
-//         fclose(outputFile);
-//     }
-// }
-
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
         if (strlen(x[i].maSV) == 0) {
             printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
             return;
-            }  
         }
+    }
+
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
     if (outputFile) {
         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
         fprintf(outputFile, "STT\t    Ho va ten\t       Ma sinh vien\tEmail\tGioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\t      BMI\n");
+
         for (int i = 0; i < n; i++) {
             tinh_BMI(&x[i]);
-            fprintf(outputFile, "%d\t    %-30s\t%s\t%-30s\t    %-10s\t%-10s\t%.2lf\t%.2lf\t    %.2lf cm\t      %.2lf\n", i + 1, x[i].ten,x[i].maSV,x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
+            fprintf(outputFile, "%-3d\t%-30s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t%-10.2lf cm\t%.2lf\n",
+                    i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
         }
+
         fclose(outputFile);
     }
 }
+
+// void xuatFile(SinhVien *x, int n) {
+//     for (int i = 0; i < n; i++) {
+//         if (strlen(x[i].maSV) == 0) {
+//             printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+//             return;
+//             }  
+//         }
+//     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
+//     if (outputFile) {
+//         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
+//         fprintf(outputFile, "STT\t    Ho va ten\t       Ma sinh vien\tEmail\tGioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\t      BMI\n");
+//         for (int i = 0; i < n; i++) {
+//             tinh_BMI(&x[i]);
+//             fprintf(outputFile, "%d\t    %-30s\t%s\t%-30s\t    %-10s\t%-10s\t%.2lf\t%.2lf\t    %.2lf cm\t      %.2lf\n", i + 1, x[i].ten,x[i].maSV,x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
+//         }
+//         fclose(outputFile);
+//     }
+// }
 // tim kiem theo ten
 void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
