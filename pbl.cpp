@@ -70,6 +70,31 @@ void in(SinhVien *x)
 
 }
 
+// ham sap xep theo ten
+void sapXepTheoTen(SinhVien a[], int n) {
+    char tenSV1[10];
+    char tenSV2[10];
+    for (int i = 0; i < n; i++) {
+        // Lấy từ cuối cùng trong tên
+        tenSV1[0] = a[i].ten[strlen(a[i].ten) - 1];
+        for (int j = i + 1; j < n; j++) {
+            // Lấy từ cuối cùng trong tên
+            tenSV2[0] = a[j].ten[strlen(a[j].ten) - 1];
+            if (strcmp(strupr(tenSV1), strupr(tenSV2)) > 0) {
+                SinhVien temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+    // In danh sách sau khi sắp xếp
+    printf("Danh sach sinh vien da sap xep: \n");
+    printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+    for (int i = 0; i < n; i++) {
+        in(&a[i]);
+    }
+}
+
 // xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
@@ -153,7 +178,7 @@ void xoaThongTin(SinhVien a[], int* n, char ID[]) {
 }
 
 //Sap xep sinh vien theo gpa giam dan
-void sapxep(SinhVien a[], int n)
+void sapXepTheoGPA(SinhVien a[], int n)
 {
     for (int i = 0; i < n; i++) {
         int max = i;
@@ -164,6 +189,11 @@ void sapxep(SinhVien a[], int n)
         SinhVien temp = a[max];
         a[max] = a[i];
         a[i] = temp;
+    }
+    printf("Danh sach sinh vien da sap xep: \n");
+    printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+    for (int i = 0; i < n; i++) {
+        in(&a[i]);
     }
 }
 int main()
@@ -178,7 +208,7 @@ int main()
         printf("4. Tim kiem sinh vien\n");
         printf("5. Liet ke sinh vien co diem cao nhat\n");
         printf("6. Xoa sinh vien theo ma sinh vien\n");
-        printf("7. Sap xep sinh vien theo gpa giam dan\n");
+        printf("7. Sap xep sinh vien\n");
         printf("8. Hien thi danh sach sinh vien\n");
         printf("9. Xuat file danh sach sinh vien\n");
         printf("0. Thoat !\n");
@@ -243,7 +273,15 @@ int main()
             xoaThongTin(a, &n, ID);
         }
         else if (lc == 7) {
-           sapxep(a, n);
+            int choice;
+            printf("1. Sap xep sinh vien co GPA giam dan\n");
+            printf("2. Sap xep sinh vien theo ten (tu a - z)\n\n");
+            printf("Vui long chon lua chon cua ban: "); scanf("%d", &choice);
+            if (choice == 1) {
+                sapXepTheoGPA(a, n);
+            } else if (choice == 2) {
+                sapXepTheoTen(a, n);
+            }
         }
         else if (lc == 8) {
             int temp = 0;
