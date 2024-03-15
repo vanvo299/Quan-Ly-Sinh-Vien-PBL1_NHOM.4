@@ -51,8 +51,8 @@ void Nhap(SinhVien* x)
     getchar();
     printf("Nhap lop: "); gets(x->lop);
     printf("Nhap gpa: "); scanf("%lf", &x->gpa);
-    printf("Nhap can nang: "); scanf("%lf", &x->canNang);
-    printf("Nhap chieu cao: "); scanf("%lf", &x->chieuCao);
+    printf("Nhap can nang (kg): "); scanf("%lf", &x->canNang);
+    printf("Nhap chieu cao (cm): "); scanf("%lf", &x->chieuCao);
     printf("\n");
 }
 
@@ -73,20 +73,20 @@ void in(SinhVien *x)
 // xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
-        if (strlen(x[i].maSV) == 0) {
-            printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+        if ((strlen(x[i].maSV) == 0) || (strlen(x[i].email) == 0)) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
             return;
         }
     }
-
+    printf("Da xuat danh sach sinh vien ra file\n");
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
     if (outputFile) {
         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
-        fprintf(outputFile, "STT\t    Ho va ten\t       Ma sinh vien\tEmail\tGioi tinh\tLop\t        GPA\t    Can nang\tChieu cao\t      BMI\n");
+        fprintf(outputFile, "STT\t Ho va ten\t         Ma sinh vien\t Email\t                         Gioi tinh\t Lop\t         GPA\t Can nang    Chieu cao\t  BMI\n");
 
         for (int i = 0; i < n; i++) {
             tinh_BMI(&x[i]);
-            fprintf(outputFile, "%-3d\t%-30s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t%-10.2lf cm\t%.2lf\n",
+            fprintf(outputFile, "%-3d\t %-22s\t %-5s\t %-30s\t %-10s\t %-10s\t %.2lf\t %.2lf\t %10.2lfcm\t %6.2lf\n",
                     i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
         }
         fclose(outputFile);
@@ -204,6 +204,7 @@ int main()
             if (strlen(a[i].maSV) == 0) {
             printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi cap email\n");
             temp = 1;
+            break;
             }  
         }
         if (temp == 0) {
@@ -246,10 +247,11 @@ int main()
         }
         else if (lc == 8) {
             int temp = 0;
-        for (int i = 0; i < n; i++) {
-        if (strlen(a[i].maSV) == 0) {
-            printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
             temp = 1;
+            break;
             }  
         }
         if (temp == 0) {
@@ -261,8 +263,7 @@ int main()
         }
         }
         else if (lc == 9) {
-            printf("Da xuat danh sach sinh vien ra file\n");
-          xuatFile(a, n); 
+            xuatFile(a, n); 
         }
         else if (lc == 0) {
             break;
