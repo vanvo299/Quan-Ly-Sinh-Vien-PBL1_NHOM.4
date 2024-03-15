@@ -51,8 +51,8 @@ void Nhap(SinhVien* x)
     getchar();
     printf("Nhap lop: "); gets(x->lop);
     printf("Nhap gpa: "); scanf("%lf", &x->gpa);
-    printf("Nhap can nang: "); scanf("%lf", &x->canNang);
-    printf("Nhap chieu cao: "); scanf("%lf", &x->chieuCao);
+    printf("Nhap can nang (kg): "); scanf("%lf", &x->canNang);
+    printf("Nhap chieu cao (cm): "); scanf("%lf", &x->chieuCao);
     printf("\n");
 }
 
@@ -73,8 +73,8 @@ void in(SinhVien *x)
 // xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
-        if (strlen(x[i].maSV) == 0) {
-            printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+        if ((strlen(x[i].maSV)) || (strlen(x[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
             return;
         }
     }
@@ -204,6 +204,7 @@ int main()
             if (strlen(a[i].maSV) == 0) {
             printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi cap email\n");
             temp = 1;
+            break;
             }  
         }
         if (temp == 0) {
@@ -246,10 +247,11 @@ int main()
         }
         else if (lc == 8) {
             int temp = 0;
-        for (int i = 0; i < n; i++) {
-        if (strlen(a[i].maSV) == 0) {
-            printf("Ma sinh vien chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
             temp = 1;
+            break;
             }  
         }
         if (temp == 0) {
@@ -261,8 +263,22 @@ int main()
         }
         }
         else if (lc == 9) {
+            int temp = 0;
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+            temp = 1;
+            }  
+            break;
+        } 
+        if (temp == 0) {
             printf("Da xuat danh sach sinh vien ra file\n");
-          xuatFile(a, n); 
+            for (int i = 0; i < n; i++) {  
+                xuatFile(a, n);
+            }
+        }
+            // xuatFile(a, n); 
+            // printf("Da xuat danh sach sinh vien ra file\n");
         }
         else if (lc == 0) {
             break;
