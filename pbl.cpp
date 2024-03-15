@@ -200,7 +200,9 @@ int main()
     SinhVien a[1000];
     int n;
     while (1) {
-        printf("------------------------QUAN LY SINH VIEN------------------------\n\n");
+        printf("\n\t    --DO AN LAP TRINH TINH TOAN--\t\t\t\n");
+        printf("THUC HIEN BOI: LUONG VAN VO & NGUYEN DANG BAO NGUYEN\n\n");
+        printf("-----QUAN LY DANH SACH SINH VIEN-----\n");
         printf("1. Nhap danh sach sinh vien\n");
         printf("2. Cap ma sinh vien\n");
         printf("3. Cap email sinh vien\n");
@@ -211,7 +213,7 @@ int main()
         printf("8. Hien thi danh sach sinh vien\n");
         printf("9. Xuat file danh sach sinh vien\n");
         printf("0. Thoat !\n");
-        printf("-----------------------------------------------------------------\n\n");
+        printf("--------------------------------------\n\n");
         printf("Nhap lua chon: ");
         int lc; 
         scanf("%d", &lc);
