@@ -72,12 +72,12 @@ void in(SinhVien *x)
 // xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
-        if ((strlen(x[i].maSV)) || (strlen(x[i].email)) == 0) {
+        if ((strlen(x[i].maSV) == 0) || (strlen(x[i].email) == 0)) {
             printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
             return;
         }
     }
-
+    printf("Da xuat danh sach sinh vien ra file\n");
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
     if (outputFile) {
         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
@@ -262,22 +262,7 @@ int main()
         }
         }
         else if (lc == 9) {
-            int temp = 0;
-            for (int i = 0; i < n; i++) {
-            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
-            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
-            temp = 1;
-            }  
-            break;
-        } 
-        if (temp == 0) {
-            printf("Da xuat danh sach sinh vien ra file\n");
-            for (int i = 0; i < n; i++) {  
-                xuatFile(a, n);
-            }
-        }
-            // xuatFile(a, n); 
-            // printf("Da xuat danh sach sinh vien ra file\n");
+            xuatFile(a, n); 
         }
         else if (lc == 0) {
             break;
