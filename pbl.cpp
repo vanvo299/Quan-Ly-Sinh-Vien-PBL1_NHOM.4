@@ -1,13 +1,16 @@
 /*
 DỰ ÁN PBL1: LẬP TRÌNH TÍNH TOÁN
 Chủ đề: Xây dựng chương trình quản lý sinh viên
-
+Nhóm: 
+Người thực hiện: Lương Văn Võ & Nguyễn Đặng Bảo Nguyên
 */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <windows.h>
+
 struct SinhVien {
     char ten[100];
     char maSV[20];
@@ -75,10 +78,10 @@ void sapXepTheoTen(SinhVien a[], int n) {
     char tenSV1[10];
     char tenSV2[10];
     for (int i = 0; i < n; i++) {
-        // Lấy từ cuối cùng trong tên
+        // Lay tu cuoi cung trong ten
         tenSV1[0] = a[i].ten[strlen(a[i].ten) - 1];
         for (int j = i + 1; j < n; j++) {
-            // Lấy từ cuối cùng trong tên
+            //  Lay tu cuoi cung trong ten
             tenSV2[0] = a[j].ten[strlen(a[j].ten) - 1];
             if (strcmp(strupr(tenSV1), strupr(tenSV2)) > 0) {
                 SinhVien temp = a[i];
@@ -87,7 +90,7 @@ void sapXepTheoTen(SinhVien a[], int n) {
             }
         }
     }
-    // In danh sách sau khi sắp xếp
+    // In danh sách sau khi sap xep
     printf("Danh sach sinh vien da sap xep: \n");
     printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
     for (int i = 0; i < n; i++) {
@@ -122,7 +125,7 @@ void xuatFile(SinhVien *x, int n) {
 void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
     for (int i = 0; i < n; i++) {
-        // Sử dụng strstr để kiểm tra tên có xuất hiện trong tên sinh viên không
+        // Su dung strstr de kiem tra tên có xuat hien trong tên sinh viên không
         if (strstr(a[i].ten, name) != NULL) {
             printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tCan nang     Chieu cao\t  BMI\n");
             in(&a[i]);
@@ -196,11 +199,35 @@ void sapXepTheoGPA(SinhVien a[], int n)
         in(&a[i]);
     }
 }
+
+void gotoxy(int x,int y)
+{
+	COORD CRD;
+    CRD.X = x;
+    CRD.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),CRD);
+}
+
 int main()
 {
     SinhVien a[1000];
     int n;
-    while (1) {
+    char pass[20]="pbl1\0";
+    char pa[20];
+    system("color f0");
+    gotoxy(53,9);
+	printf("DANG NHAP(NHAN ENTER SAU KHI NHAP MAT KHAU)");
+	gotoxy(55,10);
+	printf("____________________________________");
+	gotoxy(55,11);
+	printf("|                                  |");
+	gotoxy(55,12);
+	printf("|__________________________________|");
+	gotoxy(70,11);
+    gets(pa);
+            if (strcmp(pass,pa)==0){
+                system("cls");
+                    while (1) {
         printf("\n\t    --DO AN LAP TRINH TINH TOAN--\t\t\t\n");
         printf("THUC HIEN BOI: LUONG VAN VO & NGUYEN DANG BAO NGUYEN\n\n");
         printf("-----QUAN LY DANH SACH SINH VIEN-----\n");
@@ -309,5 +336,10 @@ int main()
             break;
         }
     }
+        }
+         else {
+            printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
+            return 0;
+        }
     return 0;
 }
