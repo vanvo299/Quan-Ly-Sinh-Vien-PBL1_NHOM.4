@@ -353,7 +353,6 @@ int main()
         }
             } else if (choice == 2) {
                 printf("\t\tThong tin suc khoe sinh vien\t\t\t\n");
-                // printf("\t%-22s\t%-5s\t%-10s\t%-10s\t %s/%s/%s\t %-10s\t%.2lf cm\t%.2lf kg\t%.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->ngaySinh, x->thangSinh, x->namSinh, x->diaChi, x->chieuCao, x->canNang, x->BMI);
                 printf("STT\tHo va ten\t        Ma sinh vien\t                        Gioi tinh\tLop\tNgay thang nam sinh \t Dia chi\t Chieu cao\t Can nang \t BMI\n");
                 for (int i = 0; i < n; i++) {
                     printf("%d", i + 1);
