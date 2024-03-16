@@ -198,6 +198,7 @@ void sapXepTheoGPA(SinhVien a[], int n)
         in(&a[i]);
     }
 }
+
 void gotoxy(int x,int y)
 {
 	COORD CRD;
