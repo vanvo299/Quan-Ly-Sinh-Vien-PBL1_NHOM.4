@@ -8,6 +8,8 @@ Chủ đề: Xây dựng chương trình quản lý sinh viên
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <windows.h>
+
 struct SinhVien {
     char ten[100];
     char maSV[20];
@@ -68,6 +70,31 @@ void in(SinhVien *x)
     tinh_BMI(x);
     printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t %10.2lf cm\t %6.2lf\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->canNang, x->chieuCao, x->BMI);
 
+}
+
+// ham sap xep theo ten
+void sapXepTheoTen(SinhVien a[], int n) {
+    char tenSV1[10];
+    char tenSV2[10];
+    for (int i = 0; i < n; i++) {
+        // Lấy từ cuối cùng trong tên
+        tenSV1[0] = a[i].ten[strlen(a[i].ten) - 1];
+        for (int j = i + 1; j < n; j++) {
+            // Lấy từ cuối cùng trong tên
+            tenSV2[0] = a[j].ten[strlen(a[j].ten) - 1];
+            if (strcmp(strupr(tenSV1), strupr(tenSV2)) > 0) {
+                SinhVien temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+    // In danh sách sau khi sắp xếp
+    printf("Danh sach sinh vien da sap xep: \n");
+    printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+    for (int i = 0; i < n; i++) {
+        in(&a[i]);
+    }
 }
 
 // xuat danh sach sinh vien ra file   
@@ -153,7 +180,7 @@ void xoaThongTin(SinhVien a[], int* n, char ID[]) {
 }
 
 //Sap xep sinh vien theo gpa giam dan
-void sapxep(SinhVien a[], int n)
+void sapXepTheoGPA(SinhVien a[], int n)
 {
     for (int i = 0; i < n; i++) {
         int max = i;
@@ -165,24 +192,54 @@ void sapxep(SinhVien a[], int n)
         a[max] = a[i];
         a[i] = temp;
     }
+    printf("Danh sach sinh vien da sap xep: \n");
+    printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+    for (int i = 0; i < n; i++) {
+        in(&a[i]);
+    }
 }
+void gotoxy(int x,int y)
+{
+	COORD CRD;
+    CRD.X = x;
+    CRD.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),CRD);
+}
+
 int main()
 {
     SinhVien a[1000];
     int n;
-    while (1) {
-        printf("------------------------QUAN LY SINH VIEN------------------------\n\n");
+    char pass[20]="pbl1\0";
+    char pa[20];
+    system("color f0");
+    gotoxy(53,9);
+	printf("DANG NHAP(NHAN ENTER SAU KHI NHAP MAT KHAU)");
+	gotoxy(55,10);
+	printf("____________________________________");
+	gotoxy(55,11);
+	printf("|                                  |");
+	gotoxy(55,12);
+	printf("|__________________________________|");
+	gotoxy(70,11);
+    gets(pa);
+            if (strcmp(pass,pa)==0){
+                system("cls");
+                    while (1) {
+        printf("\n\t    --DO AN LAP TRINH TINH TOAN--\t\t\t\n");
+        printf("THUC HIEN BOI: LUONG VAN VO & NGUYEN DANG BAO NGUYEN\n\n");
+        printf("-----QUAN LY DANH SACH SINH VIEN-----\n");
         printf("1. Nhap danh sach sinh vien\n");
         printf("2. Cap ma sinh vien\n");
         printf("3. Cap email sinh vien\n");
         printf("4. Tim kiem sinh vien\n");
         printf("5. Liet ke sinh vien co diem cao nhat\n");
         printf("6. Xoa sinh vien theo ma sinh vien\n");
-        printf("7. Sap xep sinh vien theo gpa giam dan\n");
+        printf("7. Sap xep sinh vien\n");
         printf("8. Hien thi danh sach sinh vien\n");
         printf("9. Xuat file danh sach sinh vien\n");
         printf("0. Thoat !\n");
-        printf("-----------------------------------------------------------------\n\n");
+        printf("--------------------------------------\n\n");
         printf("Nhap lua chon: ");
         int lc; 
         scanf("%d", &lc);
@@ -243,7 +300,15 @@ int main()
             xoaThongTin(a, &n, ID);
         }
         else if (lc == 7) {
-           sapxep(a, n);
+            int choice;
+            printf("1. Sap xep sinh vien co GPA giam dan\n");
+            printf("2. Sap xep sinh vien theo ten (tu a - z)\n\n");
+            printf("Vui long chon lua chon cua ban: "); scanf("%d", &choice);
+            if (choice == 1) {
+                sapXepTheoGPA(a, n);
+            } else if (choice == 2) {
+                sapXepTheoTen(a, n);
+            }
         }
         else if (lc == 8) {
             int temp = 0;
@@ -269,5 +334,10 @@ int main()
             break;
         }
     }
+        }
+         else {
+            printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
+            return 0;
+        }
     return 0;
 }
