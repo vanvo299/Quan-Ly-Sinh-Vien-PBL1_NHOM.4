@@ -8,7 +8,7 @@ Chủ đề: Xây dựng chương trình quản lý sinh viên
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include <windows.h>
+#include<windows.h>
 
 struct SinhVien {
     char ten[100];
@@ -198,15 +198,12 @@ void sapXepTheoGPA(SinhVien a[], int n)
         in(&a[i]);
     }
 }
-
-void gotoxy(int x,int y)
-{
-	COORD CRD;
-    CRD.X = x;
-    CRD.Y = y;
+void gotoxy(int x, int y){
+    COORD CRD;
+    CRD.X=x;
+    CRD.Y=y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),CRD);
 }
-
 int main()
 {
     SinhVien a[1000];
@@ -226,7 +223,7 @@ int main()
     gets(pa);
             if (strcmp(pass,pa)==0){
                 system("cls");
-                    while (1) {
+    while (1) {
         printf("\n\t    --DO AN LAP TRINH TINH TOAN--\t\t\t\n");
         printf("THUC HIEN BOI: LUONG VAN VO & NGUYEN DANG BAO NGUYEN\n\n");
         printf("-----QUAN LY DANH SACH SINH VIEN-----\n");
@@ -335,10 +332,10 @@ int main()
             break;
         }
     }
-        }
-         else {
-            printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
+ }
+       else {
+        printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
             return 0;
-        }
+       }
     return 0;
 }
