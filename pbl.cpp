@@ -1,14 +1,15 @@
 /*
 DỰ ÁN PBL1: LẬP TRÌNH TÍNH TOÁN
 Chủ đề: Xây dựng chương trình quản lý sinh viên
-
+Nhóm: 
+Người thực hiện: Lương Văn Võ & Nguyễn Đặng Bảo Nguyên
 */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include<windows.h>
+#include <windows.h>
 
 struct SinhVien {
     char ten[100];
@@ -20,6 +21,10 @@ struct SinhVien {
     char gioiTinh[5];
     double chieuCao;
     double BMI;
+    char diaChi[30];
+    char ngaySinh[5];
+    char thangSinh[5];
+    char namSinh[5];
 };
 
 typedef struct SinhVien SinhVien;
@@ -53,6 +58,10 @@ void Nhap(SinhVien* x)
     getchar();
     printf("Nhap lop: "); gets(x->lop);
     printf("Nhap gpa: "); scanf("%lf", &x->gpa);
+    getchar();
+    printf("Nhap dia chi: "); gets(x->diaChi);
+    printf("Nhap ngay thang nam sinh (dd/mm/yyyy): "); 
+    scanf("%s %s %s", &x->ngaySinh, &x->thangSinh, &x->namSinh);
     printf("Nhap can nang (kg): "); scanf("%lf", &x->canNang);
     printf("Nhap chieu cao (cm): "); scanf("%lf", &x->chieuCao);
     printf("\n");
@@ -65,22 +74,26 @@ void tinh_BMI(SinhVien *x) {
 }
 
 // ham in thong tin sinh vien
-void in(SinhVien *x)
+void in(SinhVien *x, int n)
 {
-    tinh_BMI(x);
-    printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%.2lf\t %10.2lf cm\t %6.2lf\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->canNang, x->chieuCao, x->BMI);
-
+    printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s/%s/%s\t %17s\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->ngaySinh, x->thangSinh, x->namSinh, x->diaChi);   
 }
 
+// ham in thong tin suc khoe sinh vien
+void inSucKhoe(SinhVien *x, int n)
+{
+    tinh_BMI(x);
+    printf("\t%-22s\t%-5s\t%-10s\t%-10s  %s/%s/%s\t           %.2lf cm\t %.2lf kg\t %.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->ngaySinh, x->thangSinh, x->namSinh, x->chieuCao, x->canNang, x->BMI);
+}
 // ham sap xep theo ten
 void sapXepTheoTen(SinhVien a[], int n) {
     char tenSV1[10];
     char tenSV2[10];
     for (int i = 0; i < n; i++) {
-        // Lấy từ cuối cùng trong tên
+        // Lay tu cuoi cung trong ten
         tenSV1[0] = a[i].ten[strlen(a[i].ten) - 1];
         for (int j = i + 1; j < n; j++) {
-            // Lấy từ cuối cùng trong tên
+            //  Lay tu cuoi cung trong ten
             tenSV2[0] = a[j].ten[strlen(a[j].ten) - 1];
             if (strcmp(strupr(tenSV1), strupr(tenSV2)) > 0) {
                 SinhVien temp = a[i];
@@ -89,11 +102,12 @@ void sapXepTheoTen(SinhVien a[], int n) {
             }
         }
     }
-    // In danh sách sau khi sắp xếp
+    // In danh sách sau khi sap xep
     printf("Danh sach sinh vien da sap xep: \n");
-    printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
     for (int i = 0; i < n; i++) {
-        in(&a[i]);
+        printf("%d", i + 1);
+        in(&a[i], n);
     }
 }
 
@@ -109,12 +123,12 @@ void xuatFile(SinhVien *x, int n) {
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
     if (outputFile) {
         fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
-        fprintf(outputFile, "STT\t Ho va ten\t         Ma sinh vien\t Email\t                         Gioi tinh\t Lop\t         GPA\t Can nang    Chieu cao\t  BMI\n");
+        fprintf(outputFile, "STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
 
         for (int i = 0; i < n; i++) {
             tinh_BMI(&x[i]);
-            fprintf(outputFile, "%-3d\t %-22s\t %-5s\t %-30s\t %-10s\t %-10s\t %.2lf\t %.2lf\t %10.2lfcm\t %6.2lf\n",
-                    i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].canNang, x[i].chieuCao, x[i].BMI);
+            fprintf(outputFile, "%-3d\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s/%s/%s\t %17s\n",
+                                i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].ngaySinh, x[i].thangSinh, x[i].namSinh, x[i].diaChi);
         }
         fclose(outputFile);
     }
@@ -124,10 +138,11 @@ void xuatFile(SinhVien *x, int n) {
 void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
     for (int i = 0; i < n; i++) {
-        // Sử dụng strstr để kiểm tra tên có xuất hiện trong tên sinh viên không
+        // Su dung strstr de kiem tra tên có xuat hien trong tên sinh viên không
         if (strstr(a[i].ten, name) != NULL) {
-            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tCan nang     Chieu cao\t  BMI\n");
-            in(&a[i]);
+            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+            printf("%d", i + 1);
+            in(&a[i], n);
             find = 1;
         }
     }
@@ -142,8 +157,9 @@ void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
     int find = 0;
     for (int i = 0; i < n; i++) {
         if (strcmp(ID, a[i].maSV) == 0) {
-            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tCan nang     Chieu cao\t  BMI\n");
-            in(&a[i]);
+            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+            printf("%d", i + 1);
+            in(&a[i], n);
             find = 1;
         }
     }
@@ -159,10 +175,11 @@ void maxgpa(SinhVien a[], int n)
         max = fmax(max, a[i].gpa);
     }
     printf("Thong tin cac sinh vien co diem gpa cao nhat: \n");
-    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tCan nang     Chieu cao\t  BMI\n");
+    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
     for (int i = 0; i < n; i++) {
         if (max == a[i].gpa) {
-            in(&a[i]);
+            printf("%d", i + 1);
+            in(&a[i], n);
         }
     }
 }
@@ -193,17 +210,21 @@ void sapXepTheoGPA(SinhVien a[], int n)
         a[i] = temp;
     }
     printf("Danh sach sinh vien da sap xep: \n");
-    printf("STT\tHo va ten\t                Ma sinh vien\tGioi tinh\tLop\t        GPA\tCan nang\tChieu cao\tBMI\n");
+    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
     for (int i = 0; i < n; i++) {
-        in(&a[i]);
+        printf("%d", i + 1);
+        in(&a[i], n);
     }
 }
-void gotoxy(int x, int y){
-    COORD CRD;
-    CRD.X=x;
-    CRD.Y=y;
+
+void gotoxy(int x,int y)
+{
+	COORD CRD;
+    CRD.X = x;
+    CRD.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),CRD);
 }
+
 int main()
 {
     SinhVien a[1000];
@@ -223,7 +244,7 @@ int main()
     gets(pa);
             if (strcmp(pass,pa)==0){
                 system("cls");
-    while (1) {
+                    while (1) {
         printf("\n\t    --DO AN LAP TRINH TINH TOAN--\t\t\t\n");
         printf("THUC HIEN BOI: LUONG VAN VO & NGUYEN DANG BAO NGUYEN\n\n");
         printf("-----QUAN LY DANH SACH SINH VIEN-----\n");
@@ -309,6 +330,11 @@ int main()
             }
         }
         else if (lc == 8) {
+            int choice;
+            printf("1. Danh sach thong tin sinh vien\n");
+            printf("2. Danh sach suc khoe sinh vien\n\n");
+            printf("Vui long chon lua chon cua ban: "); scanf("%d", &choice);
+            if (choice == 1) {
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
@@ -319,11 +345,20 @@ int main()
         }
         if (temp == 0) {
             printf("\t\t\tDanh sach sinh vien\t\t\t\n");
-            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tCan nang     Chieu cao\t  BMI\n");
+            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
             for (int i = 0; i < n; i++) {
-                in(&a[i]);
+                printf("%d", i + 1);
+                in(&a[i], n);
             }
         }
+            } else if (choice == 2) {
+                printf("\t\tThong tin suc khoe sinh vien\t\t\t\n");
+                printf("STT\tHo va ten\t        Ma sinh vien\tGioi tinh\tLop\t    Ngay thang nam sinh\t   Chieu cao\t Can nang \t BMI\n");
+                for (int i = 0; i < n; i++) {
+                    printf("%d", i + 1);
+                    inSucKhoe(&a[i], n);
+                }
+            }
         }
         else if (lc == 9) {
             xuatFile(a, n); 
@@ -332,10 +367,10 @@ int main()
             break;
         }
     }
- }
-       else {
-        printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
+        }
+         else {
+            printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
             return 0;
-       }
+        }
     return 0;
 }
