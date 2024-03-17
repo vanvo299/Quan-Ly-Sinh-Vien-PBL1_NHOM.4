@@ -392,7 +392,7 @@ int main()
                 sapXepTheoTen(a, n);
             }
         }
-        }
+          }
         
         else if (lc == 8) {
             int choice;
@@ -451,11 +451,8 @@ int main()
         else if (lc == 0) {
             break;
         }
-    
-        }
-            
-                    }
-            
+          }
+             }
          else {
             printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
             return 0;
