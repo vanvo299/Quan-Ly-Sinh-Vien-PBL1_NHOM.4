@@ -289,18 +289,40 @@ int main()
            }
         }
         }
+        
         else if (lc == 4) {
             int choice;
             printf("1. Tim kiem sinh vien theo ten sinh vien\n");
             printf("2. Tim Kiem sinh vien theo ma sinh vien\n\n");
             printf("Vui long chon lua chon cua ban: "); scanf("%d", &choice);
             if (choice == 1) {
+            int temp = 0;
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi tim kiem\n");
+            temp = 1;
+            break;
+            }  
+        }
+
+            if (temp == 0){
                 char name[100];
                 printf("Nhap ten sinh vien can tim kiem: ");
                 getchar();
                 gets(name);
                 timKiemTheoTen(a, n, name);
-            } else if (choice == 2) {
+            }
+        }
+             else if (choice == 2) {
+                int temp = 0;
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi tim kiem\n");
+            temp = 1;
+            break;
+            }  
+        }
+         if (temp == 0){
                 printf("Nhap ma cua sinh vien can tim kiem: ");
                 char ID[20];
                 getchar();
@@ -308,27 +330,70 @@ int main()
                 timKiemTheoMaSV(a, n, ID);
             }
         }
+    }
         else if (lc == 5) {
+            int temp = 0;
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi tim kiem\n");
+            temp = 1;
+            break;
+            }  
+        }
+         if (temp == 0){
             maxgpa(a, n);
         }
+    }
         else if (lc == 6) {
+            int temp = 0;
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc xoa\n");
+            temp = 1;
+            break;
+            }  
+        }
+         if (temp == 0){
             char ID[20];
             printf("Nhap ma sinh vien can xoa: "); 
             getchar();
             gets(ID);
             xoaThongTin(a, &n, ID);
         }
+    }
         else if (lc == 7) {
             int choice;
             printf("1. Sap xep sinh vien co GPA giam dan\n");
             printf("2. Sap xep sinh vien theo ten (tu a - z)\n\n");
             printf("Vui long chon lua chon cua ban: "); scanf("%d", &choice);
             if (choice == 1) {
+                 int temp = 0;
+                 for (int i = 0; i < n; i++) {
+                if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+                printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi sap xep\n");
+                temp = 1;
+                 break;
+            } 
+                 } 
+             if(temp==0){
                 sapXepTheoGPA(a, n);
-            } else if (choice == 2) {
+               }
+            }
+             else if (choice == 2) {
+                int temp = 0;
+                 for (int i = 0; i < n; i++) {
+                if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+                printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi sap xep\n");
+                temp = 1;
+                 break;
+            }
+                 } 
+            if(temp==0) {
                 sapXepTheoTen(a, n);
             }
         }
+        }
+        
         else if (lc == 8) {
             int choice;
             printf("1. Danh sach thong tin sinh vien\n");
@@ -338,7 +403,7 @@ int main()
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
-            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien truoc khi xuat danh sach\n");
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi xuat danh sach\n");
             temp = 1;
             break;
             }  
@@ -352,6 +417,15 @@ int main()
             }
         }
             } else if (choice == 2) {
+                int temp = 0;
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi xuat danh sach\n");
+            temp = 1;
+            break;
+            }  
+        }
+         if (temp == 0){
                 printf("\t\tThong tin suc khoe sinh vien\t\t\t\n");
                 printf("STT\tHo va ten\t        Ma sinh vien\tGioi tinh\tLop\t    Ngay thang nam sinh\t   Chieu cao\t Can nang \t BMI\n");
                 for (int i = 0; i < n; i++) {
@@ -360,14 +434,28 @@ int main()
                 }
             }
         }
+        }
         else if (lc == 9) {
+            int temp = 0;
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi xuat danh sach\n");
+            temp = 1;
+            break;
+            }  
+        }
+         if (temp == 0){
             xuatFile(a, n); 
+          }
         }
         else if (lc == 0) {
             break;
         }
-    }
+    
         }
+            
+                    }
+            
          else {
             printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
             return 0;
