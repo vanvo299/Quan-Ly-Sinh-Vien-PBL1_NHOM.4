@@ -43,28 +43,30 @@ void capEmail(SinhVien *x)
 }
 
 // Nhap thong tin sinh vien va tra ve sinh vien sau khi nhap
-void Nhap(SinhVien* x)
-{
-    getchar();
-    printf("Nhap ten: "); gets(x->ten);
-    printf("Chon gioi tinh: ");
-    int gt;
-    printf("1. Nam    2. Nu (Nhap 1 hoac 2): "); scanf("%d", &gt);
-    if (gt == 1) {
-        strcpy(x->gioiTinh, "Nam");
-    } else if (gt == 2) {
-        strcpy(x->gioiTinh, "Nu");
-    }
-    getchar();
-    printf("Nhap lop: "); gets(x->lop);
-    printf("Nhap gpa: "); scanf("%lf", &x->gpa);
-    getchar();
-    printf("Nhap dia chi: "); gets(x->diaChi);
-    printf("Nhap ngay thang nam sinh (dd/mm/yyyy): "); 
-    scanf("%s %s %s", &x->ngaySinh, &x->thangSinh, &x->namSinh);
-    printf("Nhap can nang (kg): "); scanf("%lf", &x->canNang);
-    printf("Nhap chieu cao (cm): "); scanf("%lf", &x->chieuCao);
-    printf("\n");
+void Nhap(SinhVien* x, char* line) {
+    char* token = strtok(line, "|");
+    strcpy(x->ten, token);
+
+    token = strtok(NULL, "|");
+    strcpy(x->gioiTinh, token);
+
+    token = strtok(NULL, "|");
+    strcpy(x->lop, token);
+
+    token = strtok(NULL, "|");
+    x->gpa = atof(token);
+
+    token = strtok(NULL, "|");
+    strcpy(x->diaChi, token);
+
+    token = strtok(NULL, "|");
+    strcpy(x->ngaySinh, token);
+
+    token = strtok(NULL, "|");
+    x->canNang = atof(token);
+
+    token = strtok(NULL, "|");
+    x->chieuCao = atof(token);
 }
 
 // ham tinh BMI
@@ -76,14 +78,14 @@ void tinh_BMI(SinhVien *x) {
 // ham in thong tin sinh vien
 void in(SinhVien *x, int n)
 {
-    printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s/%s/%s\t %17s\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->ngaySinh, x->thangSinh, x->namSinh, x->diaChi);   
+    printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s\t %17s\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->ngaySinh, x->diaChi);   
 }
 
 // ham in thong tin suc khoe sinh vien
 void inSucKhoe(SinhVien *x, int n)
 {
     tinh_BMI(x);
-    printf("\t%-22s\t%-5s\t%-10s\t%-10s  %s/%s/%s\t           %.2lf cm\t %.2lf kg\t %.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->ngaySinh, x->thangSinh, x->namSinh, x->chieuCao, x->canNang, x->BMI);
+    printf("\t%-22s\t%-5s\t%-10s\t%-10s  %s\t           %.2lf cm\t %.2lf kg\t %.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->ngaySinh, x->chieuCao, x->canNang, x->BMI);
 }
 // ham sap xep theo ten
 void sapXepTheoTen(SinhVien a[], int n) {
@@ -127,8 +129,8 @@ void xuatFile(SinhVien *x, int n) {
 
         for (int i = 0; i < n; i++) {
             tinh_BMI(&x[i]);
-            fprintf(outputFile, "%-3d\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s/%s/%s\t %17s\n",
-                                i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].ngaySinh, x[i].thangSinh, x[i].namSinh, x[i].diaChi);
+            fprintf(outputFile, "%-3d\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s\t %17s\n",
+                                i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].ngaySinh, x[i].diaChi);
         }
         fclose(outputFile);
     }
@@ -263,11 +265,16 @@ int main()
         int lc; 
         scanf("%d", &lc);
         if (lc == 1) {
-            printf("Nhap so luong sinh vien: "); scanf("%d", &n);
-            for (int i = 0; i < n; i++) {
-            	printf("Sinh vien %d : \n", i + 1);
-                Nhap(&a[i]);
-            }
+            FILE *file = fopen("sinhvien.txt", "r"); // Mở tệp tin để đọc
+            if (file == NULL) {
+                perror("Không thể mở tệp tin");
+                return 1;
+    }
+        char line[100];
+        while (fgets(line, sizeof(line), file) != NULL) {
+            Nhap(&a[n++], line);
+    }
+        fclose(file);
         }
         else if (lc == 2) {
             for (int i = 0; i < n; i++) {

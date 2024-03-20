@@ -1,0 +1,3 @@
+Luong Van Vo|Nam|23T_DT1|3.5|Quang Nam|23/09/2005|49.0|170.0
+Nguyen Dang Bao Nguyen|Nu|23T_DT2|4.0|Quang Nam|02/04/2005|38.0|155.0
+Nguyen Tran Ly Na|Nu|49K|3.8|Da Nang|28/05/2005|55.0|165.0
