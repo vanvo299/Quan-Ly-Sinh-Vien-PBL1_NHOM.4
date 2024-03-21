@@ -172,12 +172,13 @@ void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
 // Tim sinh vien co GPA cao nhat trong danh sach
 void maxgpa(SinhVien a[], int n)
 {
+    printf("Thong tin cac sinh vien co diem gpa cao nhat: \n");
+    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
     double max = 0;
     for (int i = 0; i < n; i++) {
         max = fmax(max, a[i].gpa);
     }
-    printf("Thong tin cac sinh vien co diem gpa cao nhat: \n");
-    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+    
     for (int i = 0; i < n; i++) {
         if (max == a[i].gpa) {
             printf("%d", i + 1);
