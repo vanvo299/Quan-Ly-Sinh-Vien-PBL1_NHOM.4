@@ -1,3 +1,8 @@
-Luong Van Vo|Nam|23T_DT1|3.5|Quang Nam|23/09/2005|49.0|170.0
-Nguyen Dang Bao Nguyen|Nu|23T_DT2|4.0|Quang Nam|02/04/2005|38.0|155.0
-Nguyen Tran Ly Na|Nu|49K|3.8|Da Nang|28/05/2005|55.0|165.0
+Luong Van Vo|Nam|23T_DT1|3.58|Quang Nam|23/09/2005|49.0|170.0
+Nguyen Dang Bao Nguyen|Nu|23T_DT2|3.81|Quang Nam|02/04/2005|38.0|155.0
+Nguyen Quang Anh|Nam|23T_DT1|3.90|Thanh Hoa|13/03/2005|56.0|175.0
+Nguyen Cong Nhat|Nam|23T_DT1|3.24|Ha Tinh|24/05/2005|54.0|170.0
+Ngo Tan Quoc|Nam|23T_DT1|3.42|Da Nang|29/06/2005|56.0|173.5
+Huynh Thi Xuan Ha|Nu|23T_DT2|3.61|Quang Nam|01/07/2005|47.0|168.0
+Dang Thi Minh Truc|Nu|23T_DT2|3.72|Thua Thien - Hue|24/08/2005|52.0|167.0
+Chau Thanh Binh|Nam|23T_DT1|3.32|Thua Thien - Hue|27/03/2005|57.0|173.0

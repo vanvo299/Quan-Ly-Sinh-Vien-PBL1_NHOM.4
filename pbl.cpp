@@ -10,7 +10,6 @@ Người thực hiện: Lương Văn Võ & Nguyễn Đặng Bảo Nguyên
 #include <math.h>
 #include <time.h>
 #include <windows.h>
-
 struct SinhVien {
     char ten[100];
     char maSV[20];
@@ -43,28 +42,36 @@ void capEmail(SinhVien *x)
 // Nhap thong tin sinh vien va tra ve sinh vien sau khi nhap
 void Nhap(SinhVien* x, char* line) {
     char* token = strtok(line, "|");
-    strcpy(x->ten, token);
+    if (token != NULL)
+        strcpy(x->ten, token);
 
     token = strtok(NULL, "|");
-    strcpy(x->gioiTinh, token);
+    if (token != NULL)
+        strcpy(x->gioiTinh, token);
 
     token = strtok(NULL, "|");
-    strcpy(x->lop, token);
+    if (token != NULL)
+        strcpy(x->lop, token);
 
     token = strtok(NULL, "|");
-    x->gpa = atof(token);
+    if (token != NULL)
+        x->gpa = atof(token);
 
     token = strtok(NULL, "|");
-    strcpy(x->diaChi, token);
+    if (token != NULL)
+        strcpy(x->diaChi, token);
 
     token = strtok(NULL, "|");
-    strcpy(x->DOB, token);
+    if (token != NULL)
+        strcpy(x->DOB, token);
 
     token = strtok(NULL, "|");
-    x->canNang = atof(token);
+    if (token != NULL)
+        x->canNang = atof(token);
 
     token = strtok(NULL, "|");
-    x->chieuCao = atof(token);
+    if (token != NULL)
+        x->chieuCao = atof(token);
 }
 
 // ham tinh BMI
@@ -85,24 +92,39 @@ void inSucKhoe(SinhVien *x, int n)
     tinh_BMI(x);
     printf("\t%-22s\t%-5s\t%-10s\t%-10s  %s\t           %.2lf cm\t %.2lf kg\t %.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->DOB, x->chieuCao, x->canNang, x->BMI);
 }
-// ham sap xep theo ten
-void sapXepTheoTen(SinhVien a[], int n) {
-    char tenSV1[10];
-    char tenSV2[10];
-    for (int i = 0; i < n; i++) {
-        // Lay tu cuoi cung trong ten
-        tenSV1[0] = a[i].ten[strlen(a[i].ten) - 1];
+//ham sap xep theo ten
+// Hàm để tách phần họ và tên từ chuỗi hoTen và lưu vào mảng ten
+void tachHoTen(char hoTen[], char ten[]) {
+    // Tìm vị trí khoảng trắng cuối cùng trong họ tên
+    char *viTriKhoangTrangCuoi = strrchr(hoTen, ' ');
+    if (viTriKhoangTrangCuoi != NULL) {
+        strcpy(ten, viTriKhoangTrangCuoi + 1);
+    } else {
+        strcpy(ten, hoTen);
+    }
+}
+
+// Hàm so sánh tên của hai sinh viên
+int soSanhTenSinhVien(struct SinhVien *sv1, struct SinhVien *sv2) {
+    char tenSV1[100], tenSV2[100];
+    tachHoTen(sv1->ten, tenSV1);
+    tachHoTen(sv2->ten, tenSV2);
+    return strcasecmp(tenSV1, tenSV2);
+}
+
+// Hàm sắp xếp sinh viên theo tên
+void sapXepTheoTen(struct SinhVien a[], int n) {
+    for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
-            //  Lay tu cuoi cung trong ten
-            tenSV2[0] = a[j].ten[strlen(a[j].ten) - 1];
-            if (strcmp(strupr(tenSV1), strupr(tenSV2)) > 0) {
-                SinhVien temp = a[i];
+            if (soSanhTenSinhVien(&a[i], &a[j]) > 0) {
+                // Hoán đổi vị trí của hai sinh viên
+                struct SinhVien temp = a[i];
                 a[i] = a[j];
                 a[j] = temp;
             }
         }
     }
-    // In danh sách sau khi sap xep
+//     In danh sách sau khi sap xep
     printf("Danh sach sinh vien da sap xep: \n");
     printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
     for (int i = 0; i < n; i++) {
@@ -110,7 +132,6 @@ void sapXepTheoTen(SinhVien a[], int n) {
         in(&a[i], n);
     }
 }
-
 // xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
@@ -269,7 +290,7 @@ int main()
                 perror("Không thể mở tệp tin");
                 return 1;
     }
-        char line[100];
+        char line[1000];
         while (fgets(line, sizeof(line), file) != NULL) {
             Nhap(&a[n++], line);
     }
