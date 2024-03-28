@@ -22,9 +22,7 @@ struct SinhVien {
     double chieuCao;
     double BMI;
     char diaChi[30];
-    char ngaySinh[5];
-    char thangSinh[5];
-    char namSinh[5];
+    char ngaySinh[30];
 };
 
 typedef struct SinhVien SinhVien;
