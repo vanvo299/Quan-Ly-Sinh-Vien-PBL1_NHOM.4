@@ -22,7 +22,7 @@ struct SinhVien {
     double chieuCao;
     double BMI;
     char diaChi[30];
-    char ngaySinh[30];
+    char DOB[30];
 };
 
 typedef struct SinhVien SinhVien;
@@ -58,7 +58,7 @@ void Nhap(SinhVien* x, char* line) {
     strcpy(x->diaChi, token);
 
     token = strtok(NULL, "|");
-    strcpy(x->ngaySinh, token);
+    strcpy(x->DOB, token);
 
     token = strtok(NULL, "|");
     x->canNang = atof(token);
@@ -76,14 +76,14 @@ void tinh_BMI(SinhVien *x) {
 // ham in thong tin sinh vien
 void in(SinhVien *x, int n)
 {
-    printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s\t %17s\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->ngaySinh, x->diaChi);   
+    printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s\t %17s\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->DOB, x->diaChi);   
 }
 
 // ham in thong tin suc khoe sinh vien
 void inSucKhoe(SinhVien *x, int n)
 {
     tinh_BMI(x);
-    printf("\t%-22s\t%-5s\t%-10s\t%-10s  %s\t           %.2lf cm\t %.2lf kg\t %.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->ngaySinh, x->chieuCao, x->canNang, x->BMI);
+    printf("\t%-22s\t%-5s\t%-10s\t%-10s  %s\t           %.2lf cm\t %.2lf kg\t %.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->DOB, x->chieuCao, x->canNang, x->BMI);
 }
 // ham sap xep theo ten
 void sapXepTheoTen(SinhVien a[], int n) {
@@ -128,7 +128,7 @@ void xuatFile(SinhVien *x, int n) {
         for (int i = 0; i < n; i++) {
             tinh_BMI(&x[i]);
             fprintf(outputFile, "%-3d\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s\t %17s\n",
-                                i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].ngaySinh, x[i].diaChi);
+                                i + 1, x[i].ten, x[i].maSV, x[i].email, x[i].gioiTinh, x[i].lop, x[i].gpa, x[i].DOB, x[i].diaChi);
         }
         fclose(outputFile);
     }
