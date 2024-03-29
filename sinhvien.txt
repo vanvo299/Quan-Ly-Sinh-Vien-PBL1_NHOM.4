@@ -6,3 +6,15 @@ Ngo Tan Quoc|Nam|23T_DT1|3.42|Da Nang|29/06/2005|56.0|173.5
 Huynh Thi Xuan Ha|Nu|23T_DT2|3.61|Quang Nam|01/07/2005|47.0|168.0
 Dang Thi Minh Truc|Nu|23T_DT2|3.72|Thua Thien - Hue|24/08/2005|52.0|167.0
 Chau Thanh Binh|Nam|23T_DT1|3.32|Thua Thien - Hue|27/03/2005|57.0|173.0
+Tran Ngoc Duong|Nam|23T_DT2|3.61|Quang Binh|19/06/2005|54.0|173.0
+Nguyen Van Ky|Nam|23T_DT1|3.54|Quang Nam|14/07/2005|47.5|167.0
+Tran Minh Phi|Nam|23T_DT1|3.31|Thua Thien - Hue|21/03/2005|57.2|180.0
+Vo Hoang Tri|Nam|23T_DT4|3.37|Da Nang|03/08/2005|60.0|176.0
+Nguyen Thi Bao Ngan|Nu|23T_DT2|3.87|Da Nang|22/11/2005|46.0|165.6
+Le Thi Kieu Chi|Nu|23T_DT1|3.72|Thua Thien - Hue|27/02/2005|47.0|168.0
+Nguyen Van Trung Anh|Nam|23T_DT1|3.75|Quang Nam|16/05/2005|46.0|169.5
+Le Anh Hao|Nam|23T_DT1|3.21|Ha Tinh|03/03/2005|44.0|167.0
+Nguyen Hoang Phuc|Nam|23T_DT1|3.45|Quang Nam|07/04/2005|58.0|172.0
+Phan Van Truong|Nam|23T_DT1|3.67|Da Nang|24/06/2005|60.0|177.0
+Bien Cao Cuong|Nam|23T_DT1|3.57|Da Nang|16/02/2005|57.0|173.0
+Phan Thi Nhan Vy|Nu|23T_DT1|3.73|Da Nang|12/10/2005|43.0|160.0
