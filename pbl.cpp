@@ -158,10 +158,10 @@ void xuatFile(SinhVien *x, int n) {
 // tim kiem theo ten
 void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
+    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
     for (int i = 0; i < n; i++) {
         // Su dung strstr de kiem tra tên có xuat hien trong tên sinh viên không
         if (strstr(a[i].ten, name) != NULL) {
-            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
             printf("%d", i + 1);
             in(&a[i], n);
             find = 1;
