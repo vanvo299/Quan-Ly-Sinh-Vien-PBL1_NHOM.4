@@ -279,6 +279,7 @@ int main()
         printf("7. Sap xep sinh vien\n");
         printf("8. Hien thi danh sach sinh vien\n");
         printf("9. Xuat file danh sach sinh vien\n");
+        printf("10. Danh sach sinh vien nhan hoc bong\n");
         printf("0. Thoat !\n");
         printf("--------------------------------------\n\n");
         printf("Nhap lua chon: ");
@@ -294,12 +295,14 @@ int main()
         while (fgets(line, sizeof(line), file) != NULL) {
             Nhap(&a[n++], line);
     }
+        printf("Da nhap thong tin tu file\n");
         fclose(file);
         }
         else if (lc == 2) {
             for (int i = 0; i < n; i++) {
                 taoMaSV(&a[i]);
             }
+            printf("Da cap ma sinh vien\n");
         }
         else if (lc == 3) {
             int temp = 0;
@@ -314,6 +317,7 @@ int main()
            for (int i = 0; i < n; i++) {
             capEmail(&a[i]);
            }
+           printf("Da cap email sinh vien\n");
         }
         }
         
@@ -474,6 +478,28 @@ int main()
          if (temp == 0){
             xuatFile(a, n); 
           }
+        }
+        else if (lc == 10) {
+            int temp = 0;
+            for (int i = 0; i < n; i++) {
+                for (int j = i + 1; j < n; j++) {
+                    if (a[i].gpa < a[j].gpa) {
+                        temp = 1;
+                        break;
+                    }
+                }
+            }
+            if (temp == 0) {
+            printf("\t\t\tDanh sach sinh vien nhan hoc bong\t\t\t\n");
+            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+            for (int i = 0; i < 15; i++) {
+                printf("%d", i + 1);
+                in(&a[i], n);
+                // xuatFile(a, n);
+            }
+            } else if (temp == 1) {
+                printf("Ban phai sap xep danh sach sinh vien co diem GPA tu cao xuong thap\n");
+            }     
         }
         else if (lc == 0) {
             break;
