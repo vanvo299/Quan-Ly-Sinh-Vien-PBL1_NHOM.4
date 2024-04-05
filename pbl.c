@@ -10,6 +10,8 @@ Người thực hiện: Lương Văn Võ & Nguyễn Đặng Bảo Nguyên
 #include <math.h>
 #include <time.h>
 #include <windows.h>
+#include <ctype.h>
+
 struct SinhVien {
     char ten[100];
     char maSV[20];
@@ -155,13 +157,25 @@ void xuatFile(SinhVien *x, int n) {
     }
 }
 
+// ham de chuyen xau tat ca thanh chu thuong (VD: HELLO -> hello)
+void toLowerCase(char str[]) {
+    int i = 0;
+    while (str[i] != '\0') {
+        str[i] = tolower(str[i]); // Chuyển đổi ký tự thành chữ thường
+        i++;
+    }
+}
+
 // tim kiem theo ten
 void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
     printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
     for (int i = 0; i < n; i++) {
+        char temp[200];
+        strcpy(temp, a[i].ten);
+        toLowerCase(temp);
         // Su dung strstr de kiem tra tên có xuat hien trong tên sinh viên không
-        if (strstr(a[i].ten, name) != NULL) {
+        if (strstr(temp, name) != NULL) {
             printf("%d", i + 1);
             in(&a[i], n);
             find = 1;
