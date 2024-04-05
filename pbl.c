@@ -94,6 +94,7 @@ void inSucKhoe(SinhVien *x, int n)
     tinh_BMI(x);
     printf("\t%-22s\t%-5s\t%-10s\t%-10s  %s\t           %.2lf cm\t %.2lf kg\t %.2lf\n", x->ten,x->maSV, x->gioiTinh, x->lop, x->DOB, x->chieuCao, x->canNang, x->BMI);
 }
+
 //ham sap xep theo ten
 // Hàm để tách phần họ và tên từ chuỗi hoTen và lưu vào mảng ten
 void tachHoTen(char hoTen[], char ten[]) {
@@ -134,6 +135,7 @@ void sapXepTheoTen(struct SinhVien a[], int n) {
         in(&a[i], n);
     }
 }
+
 // xuat danh sach sinh vien ra file   
 void xuatFile(SinhVien *x, int n) {
     for (int i = 0; i < n; i++) {
@@ -202,23 +204,7 @@ void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
         printf("Khong tim thay sinh vien\n");
     }
 }
-// Tim sinh vien co GPA cao nhat trong danh sach
-void maxgpa(SinhVien a[], int n)
-{
-    printf("Thong tin cac sinh vien co diem gpa cao nhat: \n");
-    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
-    double max = 0;
-    for (int i = 0; i < n; i++) {
-        max = fmax(max, a[i].gpa);
-    }
-    
-    for (int i = 0; i < n; i++) {
-        if (max == a[i].gpa) {
-            printf("%d", i + 1);
-            in(&a[i], n);
-        }
-    }
-}
+
 // xoa sinh vien theo ten (chi can ten)
 void xoaThongTin(SinhVien a[], int* n, char ID[]) {
     for (int i = 0; i < *n; i++) {
@@ -288,12 +274,11 @@ int main()
         printf("2. Cap ma sinh vien\n");
         printf("3. Cap email sinh vien\n");
         printf("4. Tim kiem sinh vien\n");
-        printf("5. Liet ke sinh vien co diem cao nhat\n");
-        printf("6. Xoa sinh vien theo ma sinh vien\n");
-        printf("7. Sap xep sinh vien\n");
-        printf("8. Hien thi danh sach sinh vien\n");
-        printf("9. Xuat file danh sach sinh vien\n");
-        printf("10. Danh sach sinh vien nhan hoc bong\n");
+        printf("5. Xoa sinh vien theo ma sinh vien\n");
+        printf("6. Sap xep sinh vien\n");
+        printf("7. Hien thi danh sach sinh vien\n");
+        printf("8. Xuat file danh sach sinh vien\n");
+        printf("9. Danh sach sinh vien nhan hoc bong\n");
         printf("0. Thoat !\n");
         printf("--------------------------------------\n\n");
         printf("Nhap lua chon: ");
@@ -380,19 +365,6 @@ int main()
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
-            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi tim kiem\n");
-            temp = 1;
-            break;
-            }  
-        }
-         if (temp == 0){
-            maxgpa(a, n);
-        }
-    }
-        else if (lc == 6) {
-            int temp = 0;
-            for (int i = 0; i < n; i++) {
-            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
             printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc xoa\n");
             temp = 1;
             break;
@@ -404,9 +376,10 @@ int main()
             getchar();
             gets(ID);
             xoaThongTin(a, &n, ID);
+            printf("Da xoa thong tin cua sinh vien co ma sinh vien %s\n", ID);
         }
     }
-        else if (lc == 7) {
+        else if (lc == 6) {
             int choice;
             printf("1. Sap xep sinh vien co GPA giam dan\n");
             printf("2. Sap xep sinh vien theo ten (tu a - z)\n\n");
@@ -439,7 +412,7 @@ int main()
         }
           }
         
-        else if (lc == 8) {
+        else if (lc == 7) {
             int choice;
             printf("1. Danh sach thong tin sinh vien\n");
             printf("2. Danh sach suc khoe sinh vien\n\n");
@@ -480,7 +453,7 @@ int main()
             }
         }
         }
-        else if (lc == 9) {
+        else if (lc == 8) {
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
@@ -493,7 +466,7 @@ int main()
             xuatFile(a, n); 
           }
         }
-        else if (lc == 10) {
+        else if (lc == 9) {
             int temp = 0;
             for (int i = 0; i < n; i++) {
                 for (int j = i + 1; j < n; j++) {
