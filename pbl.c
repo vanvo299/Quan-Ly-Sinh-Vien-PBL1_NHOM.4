@@ -509,7 +509,6 @@ int main()
             for (int i = 0; i < 15; i++) {
                 printf("%d", i + 1);
                 in(&a[i], n);
-                // xuatFile(a, n);
             }
             } else if (temp == 1) {
                 printf("Ban phai sap xep danh sach sinh vien co diem GPA tu cao xuong thap\n");
