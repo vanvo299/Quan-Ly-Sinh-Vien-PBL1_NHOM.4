@@ -85,7 +85,7 @@ void tinh_BMI(SinhVien *x) {
 // ham in thong tin sinh vien
 void in(SinhVien *x, int n)
 {
-    printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s\t %17s\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->DOB, x->diaChi);   
+    printf("\t%-22s\t%-5s\t%-30s\t%-10s\t%-10s\t%.2lf\t%s\t         %-20s\n", x->ten,x->maSV,x->email, x->gioiTinh, x->lop, x->gpa, x->DOB, x->diaChi);   
 }
 
 // ham in thong tin suc khoe sinh vien
