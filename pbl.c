@@ -171,20 +171,22 @@ void toLowerCase(char str[]) {
 // tim kiem theo ten
 void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
-    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
     for (int i = 0; i < n; i++) {
         char temp[200];
         strcpy(temp, a[i].ten);
         toLowerCase(temp);
         // Su dung strstr de kiem tra tên có xuat hien trong tên sinh viên không
         if (strstr(temp, name) != NULL) {
+            if (!find) {
+                printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+            }
             printf("%d", i + 1);
             in(&a[i], n);
             find = 1;
         }
     }
     if (find == 0) {
-        printf("Khong tim thay sinh vien\n");
+        printf("Khong tim thay sinh vien co ten: %s\n", name);
     }
 }
 
@@ -201,20 +203,26 @@ void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
         }
     }
     if (find == 0) {
-        printf("Khong tim thay sinh vien\n");
+        printf("Khong tim thay sinh vien co ma sinh vien: %s\n", ID);
     }
 }
 
 // xoa sinh vien theo ten (chi can ten)
 void xoaThongTin(SinhVien a[], int* n, char ID[]) {
+    int find = 0;
     for (int i = 0; i < *n; i++) {
         if (strcmp(a[i].maSV, ID) == 0) {
             for (int j = i; j < *n - 1; j++) {
                 a[j] = a[j + 1];
             }
             (*n)--;
+            find = 1;
+            printf("Da xoa sinh vien co ma sinh vien: %s\n", ID);
             break;
         }
+    }
+    if (!find) {
+        printf("Khong tim thay sinh vien co ma sinh vien: %s\n", ID);
     }
 }
 
@@ -266,26 +274,20 @@ int main()
     gets(pa);
             if (strcmp(pass,pa)==0){
                 system("cls");
-                    while (1) {
+        
+    
+    
+    while(1) {
         printf("\n\t    --DO AN LAP TRINH TINH TOAN--\t\t\t\n");
         printf("THUC HIEN BOI: LUONG VAN VO & NGUYEN DANG BAO NGUYEN\n\n");
-        printf("-----QUAN LY DANH SACH SINH VIEN-----\n");
-        printf("1. Nhap danh sach sinh vien\n");
-        printf("2. Cap ma sinh vien\n");
-        printf("3. Cap email sinh vien\n");
-        printf("4. Tim kiem sinh vien\n");
-        printf("5. Xoa sinh vien theo ma sinh vien\n");
-        printf("6. Sap xep sinh vien\n");
-        printf("7. Hien thi danh sach sinh vien\n");
-        printf("8. Xuat file danh sach sinh vien\n");
-        printf("9. Danh sach sinh vien nhan hoc bong\n");
-        printf("0. Thoat !\n");
-        printf("--------------------------------------\n\n");
-        printf("Nhap lua chon: ");
-        int lc; 
-        scanf("%d", &lc);
-        if (lc == 1) {
-            FILE *file = fopen("sinhvien.txt", "r"); // Mở tệp tin để đọc
+        printf("1. 23T_DT1 \n");
+        printf("2. 23T_DT2 \n");
+        printf("0. Thoat \n");
+        printf("VUI LONG CHON LOP: ");
+        int lc_class;
+        scanf("%d", &lc_class);
+        if (lc_class == 1) {
+            FILE *file = fopen("23T_DT1.txt", "r"); // Mở tệp tin để đọc
             if (file == NULL) {
                 perror("Không thể mở tệp tin");
                 return 1;
@@ -294,16 +296,51 @@ int main()
         while (fgets(line, sizeof(line), file) != NULL) {
             Nhap(&a[n++], line);
     }
-        printf("Da nhap thong tin tu file\n");
+        printf("Da nhap thong tin tu file 23T_DT1.txt\n");
         fclose(file);
         }
-        else if (lc == 2) {
+        if (lc_class == 2) {
+            n = 0;
+            FILE *file = fopen("23T_DT2.txt", "r"); // Mở tệp tin để đọc
+            if (file == NULL) {
+                perror("Không thể mở tệp tin");
+                return 1;
+    }
+        char line[1000];
+        while (fgets(line, sizeof(line), file) != NULL) {
+            Nhap(&a[n++], line);
+    }
+        printf("Da nhap thong tin tu file 23T_DT2.txt\n");
+        fclose(file);
+        
+        }
+        else if (lc_class == 0) {
+            break;
+        }
+                    while (1) {
+        printf("\n\t    --DO AN LAP TRINH TINH TOAN--\t\t\t\n");
+        printf("THUC HIEN BOI: LUONG VAN VO & NGUYEN DANG BAO NGUYEN\n\n");
+        printf("-----QUAN LY DANH SACH SINH VIEN-----\n");
+        printf("1. Cap ma sinh vien\n");
+        printf("2. Cap email sinh vien\n");
+        printf("3. Tim kiem sinh vien\n");
+        printf("4. Xoa sinh vien theo ma sinh vien\n");
+        printf("5. Sap xep sinh vien\n");
+        printf("6. Hien thi danh sach sinh vien\n");
+        printf("7. Xuat file danh sach sinh vien\n");
+        printf("0. Thoat !\n");
+        printf("--------------------------------------\n\n");
+        printf("Nhap lua chon: ");
+        int lc; 
+        scanf("%d", &lc);
+        
+        if (lc == 1) {
             for (int i = 0; i < n; i++) {
                 taoMaSV(&a[i]);
             }
             printf("Da cap ma sinh vien\n");
         }
-        else if (lc == 3) {
+        else if (lc == 2) {
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if (strlen(a[i].maSV) == 0) {
@@ -320,7 +357,7 @@ int main()
         }
         }
         
-        else if (lc == 4) {
+        else if (lc == 3) {
             int choice;
             printf("1. Tim kiem sinh vien theo ten sinh vien\n");
             printf("2. Tim Kiem sinh vien theo ma sinh vien\n\n");
@@ -361,7 +398,7 @@ int main()
             }
         }
     }
-        else if (lc == 5) {
+        else if (lc == 4) {
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
@@ -376,10 +413,9 @@ int main()
             getchar();
             gets(ID);
             xoaThongTin(a, &n, ID);
-            printf("Da xoa thong tin cua sinh vien co ma sinh vien %s\n", ID);
         }
     }
-        else if (lc == 6) {
+        else if (lc == 5) {
             int choice;
             printf("1. Sap xep sinh vien co GPA giam dan\n");
             printf("2. Sap xep sinh vien theo ten (tu a - z)\n\n");
@@ -412,7 +448,7 @@ int main()
         }
           }
         
-        else if (lc == 7) {
+        else if (lc == 6) {
             int choice;
             printf("1. Danh sach thong tin sinh vien\n");
             printf("2. Danh sach suc khoe sinh vien\n\n");
@@ -453,7 +489,7 @@ int main()
             }
         }
         }
-        else if (lc == 8) {
+        else if (lc == 7) {
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
@@ -466,31 +502,11 @@ int main()
             xuatFile(a, n); 
           }
         }
-        else if (lc == 9) {
-            int temp = 0;
-            for (int i = 0; i < n; i++) {
-                for (int j = i + 1; j < n; j++) {
-                    if (a[i].gpa < a[j].gpa) {
-                        temp = 1;
-                        break;
-                    }
-                }
-            }
-            if (temp == 0) {
-            printf("\t\t\tDanh sach sinh vien nhan hoc bong\t\t\t\n");
-            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
-            for (int i = 0; i < 15; i++) {
-                printf("%d", i + 1);
-                in(&a[i], n);
-            }
-            } else if (temp == 1) {
-                printf("Ban phai sap xep danh sach sinh vien co diem GPA tu cao xuong thap\n");
-            }     
-        }
         else if (lc == 0) {
             break;
         }
           }
+            }
              }
          else {
             printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
