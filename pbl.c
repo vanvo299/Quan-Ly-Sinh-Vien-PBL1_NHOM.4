@@ -255,6 +255,31 @@ void gotoxy(int x,int y)
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),CRD);
 }
 
+void nhapThemThongTin(SinhVien* x)
+{
+    getchar();
+    printf("Ho va ten sinh vien: "); gets(x->ten);
+    printf("Chon gioi tinh: ");
+    int gt;
+    printf("1. Nam    2. Nu (Nhap 1 hoac 2): "); scanf("%d", &gt);
+    if (gt == 1) {
+        strcpy(x->gioiTinh, "Nam");
+    } else if (gt == 2) {
+        strcpy(x->gioiTinh, "Nu");
+    }
+    getchar();
+    printf("Lop: "); gets(x->lop);
+    printf("GPA: "); scanf("%lf", &x->gpa);
+    printf("Can nang (kg): "); scanf("%lf", &x->canNang);
+    printf("Chieu cao (cm): "); scanf("%lf", &x->chieuCao);
+    getchar();
+    printf("Dia chi: "); gets(x->diaChi);
+    printf("Ngay thang nam sinh (dd/mm/yyyy): "); scanf("%s", &x->DOB);
+    
+    taoMaSV(x);
+    capEmail(x);
+}
+
 int main()
 {
     SinhVien a[1000];
@@ -327,7 +352,8 @@ int main()
         printf("4. Xoa sinh vien theo ma sinh vien\n");
         printf("5. Sap xep sinh vien\n");
         printf("6. Hien thi danh sach sinh vien\n");
-        printf("7. Xuat file danh sach sinh vien\n");
+        printf("7. Nhap them thong tin sinh vien \n");
+        printf("8. Xuat file danh sach sinh vien\n");
         printf("0. Thoat !\n");
         printf("--------------------------------------\n\n");
         printf("Nhap lua chon: ");
@@ -488,8 +514,24 @@ int main()
                 }
             }
         }
+    }
+    else if(lc == 7) {
+            int temp = 0;
+            for (int i = 0; i < n; i++) {
+            if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi xuat danh sach\n");
+            temp = 1;
+            break;
+            }  
         }
-        else if (lc == 7) {
+         if (temp == 0){
+            SinhVien newStudent;
+            printf("Nhap vao thong tin cua sinh vien \n");
+            nhapThemThongTin(&newStudent);
+            a[n++] = newStudent;
+          }    
+        }
+        else if (lc == 8) {
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
