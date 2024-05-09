@@ -127,13 +127,6 @@ void sapXepTheoTen(struct SinhVien a[], int n) {
             }
         }
     }
-//     In danh sách sau khi sap xep
-    printf("Danh sach sinh vien da sap xep: \n");
-    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d", i + 1);
-        in(&a[i], n);
-    }
 }
 
 // xuat danh sach sinh vien ra file   
@@ -239,12 +232,7 @@ void sapXepTheoGPA(SinhVien a[], int n)
         a[max] = a[i];
         a[i] = temp;
     }
-    printf("Danh sach sinh vien da sap xep: \n");
-    printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d", i + 1);
-        in(&a[i], n);
-    }
+    printf("Danh sach sinh vien da duoc sap xep theo GPA tu cao xuong thap. \n");
 }
 
 void gotoxy(int x,int y)
@@ -280,6 +268,25 @@ void nhapThemThongTin(SinhVien* x)
     capEmail(x);
 }
 
+// đọc dữ liệu từ file 
+void docThongTinTuFile(const char *tenTep, SinhVien a[], int *n) {
+    FILE *file = fopen(tenTep, "r");
+    if (file == NULL) {
+        perror("Không thể mở tệp tin");
+        exit(1);
+    }
+
+    char line[1000];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        // Xử lý thông tin từ dòng line và lưu vào mảng a
+        Nhap(&a[*n], line);
+        (*n)++;
+    }
+
+    printf("Da nhap thong tin tu file %s\n", tenTep);
+    fclose(file);
+}
+
 int main()
 {
     SinhVien a[1000];
@@ -312,32 +319,15 @@ int main()
         int lc_class;
         scanf("%d", &lc_class);
         if (lc_class == 1) {
-            FILE *file = fopen("23T_DT1.txt", "r"); // Mở tệp tin để đọc
-            if (file == NULL) {
-                perror("Không thể mở tệp tin");
-                return 1;
-    }
-        char line[1000];
-        while (fgets(line, sizeof(line), file) != NULL) {
-            Nhap(&a[n++], line);
-    }
-        printf("Da nhap thong tin tu file 23T_DT1.txt\n");
-        fclose(file);
+           docThongTinTuFile("23T_DT1.txt", a, &n);
         }
         if (lc_class == 2) {
             n = 0;
-            FILE *file = fopen("23T_DT2.txt", "r"); // Mở tệp tin để đọc
-            if (file == NULL) {
-                perror("Không thể mở tệp tin");
-                return 1;
-    }
-        char line[1000];
-        while (fgets(line, sizeof(line), file) != NULL) {
-            Nhap(&a[n++], line);
-    }
-        printf("Da nhap thong tin tu file 23T_DT2.txt\n");
-        fclose(file);
-        
+            docThongTinTuFile("23T_DT2.txt", a, &n);
+            for (int i = 0; i < n; i++) {
+                strcpy(a[i].maSV, "");
+                strcpy(a[i].email, "");
+            } 
         }
         else if (lc_class == 0) {
             break;
@@ -361,10 +351,20 @@ int main()
         scanf("%d", &lc);
         
         if (lc == 1) {
+            int temp = 0;
             for (int i = 0; i < n; i++) {
-                taoMaSV(&a[i]);
-            }
-            printf("Da cap ma sinh vien\n");
+                for (int j = i + 1; j < n; j++) {
+                if (soSanhTenSinhVien(&a[i], &a[j]) > 0) {
+                    temp = 1;
+                }
+        }
+            }  
+            if (temp == 0) {
+                printf("Da cap ma sinh vien\n");
+                 for (int i = 0; i < n; i++) {
+                    taoMaSV(&a[i]);
+                }
+        } else printf("Vui long sap xep sinh vien theo thu tu tu A - Z truoc khi cap ma !!!\n");
         }
         else if (lc == 2) {
             int temp = 0;
@@ -460,17 +460,8 @@ int main()
                }
             }
              else if (choice == 2) {
-                int temp = 0;
-                 for (int i = 0; i < n; i++) {
-                if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
-                printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi sap xep\n");
-                temp = 1;
-                 break;
-            }
-                 } 
-            if(temp==0) {
-                sapXepTheoTen(a, n);
-            }
+                    sapXepTheoTen(a, n);
+                    printf("Da sap xep danh sach sinh vien theo thu tu tu A - Z. \n");
         }
           }
         
