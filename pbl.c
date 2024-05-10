@@ -208,18 +208,41 @@ void timKiemTheoTen(SinhVien a[], int n, char name[]) {
 }
 
 // tim kiem theo ma SV
-void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
-{
+int soSanhMaSV(const void *a, const void *b) {
+    const SinhVien *svA = (const SinhVien *)a;
+    const SinhVien *svB = (const SinhVien *)b;
+    return strcmp(svA->maSV, svB->maSV);
+}
+
+// Hàm tìm kiếm theo mã sinh viên trong danh sách đã được sắp xếp
+void timKiemTheoMaSV(SinhVien a[], int n, char ID[]) {
+    // Sắp xếp danh sách sinh viên theo mã sinh viên để áp dụng tìm kiếm nhị phân
+    qsort(a, n, sizeof(SinhVien), soSanhMaSV);
+
     int find = 0;
-    for (int i = 0; i < n; i++) {
-        if (strcmp(ID, a[i].maSV) == 0) {
-            printf("STT\tHO VA TEN\t        MA SINH VIEN\tEMAIL\t                        GIOI TINH\tLOP\t        GPA\tNGAY THANG NAM SINH \t DIA CHI\n");
-            printf("%d", i + 1);
-            in(&a[i], n);
-            find = 1;
-        }
+    
+    int left = 0, right = n - 1;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        
+        int cmp = strcmp(ID, a[mid].maSV);
+        
+        if (cmp == 0) {
+            if (!find) {
+                printf("STT\tHO VA TEN\t        MA SINH VIEN\tEMAIL\t                        GIOI TINH\tLOP\t        GPA\tNGAY THANG NAM SINH \t DIA CHI\n");
+            }
+            printf("%d", mid + 1);
+            in(&a[mid], n); 
+            find = 1; 
+            break; 
+        } else if (cmp < 0) {
+            right = mid - 1;
+        } else {
+            left = mid + 1;
     }
-    if (find == 0) {
+    }
+    if (!find) {
         printf("Khong tim thay sinh vien co ma sinh vien: %s\n", ID);
     }
 }
@@ -254,7 +277,7 @@ int soSanhGPA(struct SinhVien *sv1, struct SinhVien *sv2) {
 }
 
 // Hàm chia mảng theo pivot dựa trên GPA
-int partitionGPA(SinhVien a[], int low, int high) {
+int chiaMangTheoPivot(SinhVien a[], int low, int high) {
     SinhVien pivot = a[high];
     int i = low - 1;
 
@@ -270,18 +293,18 @@ int partitionGPA(SinhVien a[], int low, int high) {
 }
 
 // Hàm sắp xếp Quick Sort theo GPA
-void pivotGPA(SinhVien a[], int low, int high) {
+void sapXepTheoDiemGPA(SinhVien a[], int low, int high) {
     if (low < high) {
-        int pivot = partitionGPA(a, low, high);
+        int pivot = chiaMangTheoPivot(a, low, high);
 
-        pivotGPA(a, low, pivot - 1);
-        pivotGPA(a, pivot + 1, high);
+        sapXepTheoDiemGPA(a, low, pivot - 1);
+        sapXepTheoDiemGPA(a, pivot + 1, high);
     }
 }
 
 // Hàm sắp xếp sinh viên theo GPA từ cao xuống thấp bằng Quick Sort
 void sapXepTheoGPA(SinhVien a[], int n) {
-    pivotGPA(a, 0, n - 1);
+    sapXepTheoDiemGPA(a, 0, n - 1);
     printf("Danh sach sinh vien da duoc sap xep theo GPA tu cao xuong thap. \n");
 }
 
