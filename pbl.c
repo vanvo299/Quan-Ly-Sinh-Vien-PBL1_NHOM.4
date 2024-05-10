@@ -289,8 +289,9 @@ void docThongTinTuFile(const char *tenTep, SinhVien a[], int *n) {
 
 int main()
 {
-    SinhVien a[1000];
-    int n;
+    int max_students = 1000;
+    SinhVien *a = (SinhVien*)malloc(sizeof(SinhVien) * max_students);
+    int n = 0;
     char pass[20]="pbl1\0";
     char pa[20];
     system("color f0");
@@ -545,5 +546,6 @@ int main()
             printf("\n\n\t\t\t\t\t\t\tVUI LONG KIEM TRA LAI MAT KHAU!");
             return 0;
         }
+        free(a);
     return 0;
 }
