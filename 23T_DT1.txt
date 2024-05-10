@@ -20,7 +20,7 @@ Ngo Quang Sinh|Nam|23T_DT1|3.24|Quang Tri|24/05/2005|60.0|175.0
 Nguyen Van Nhuan|Nam|23T_DT1|3.17|Quang Ngai|19/06/2005|53.0|170.0
 Phan Nguyen Yen Trinh|Nu|23T_DT1|3.45|Da Nang|17/02/2005|45.0|160.0
 Nguyen Van Giap|Nam|23T_DT1|3.11|Nghe An|13/06/2005|45.0|168.0
-Vo Minh Phi|Nam|23T_DT1|3.21|Thua Thien - Hue|18/02/2005|54.0|180.0
+Ngo Van Quang Long|Nam|23T_DT1|3.21|Thua Thien - Hue|18/02/2005|54.0|170.0
 Hoang Minh Tri|Nam|23T_DT1|3.65|Da Nang|30/05/2005|56.0|171.0
 Huynh Ngoc Khanh Linh|Nu|23T_DT1|3.46|Da Nang|16/10/2005|60.0|170.0
 Nguyen Huu Minh Quan|Nam|23T_DT1|3.42|Da Nang|24/05/2005|52.0|168.0
