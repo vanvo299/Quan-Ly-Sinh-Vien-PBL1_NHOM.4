@@ -108,25 +108,49 @@ void tachHoTen(char hoTen[], char ten[]) {
 }
 
 // Hàm so sánh tên của hai sinh viên
-int soSanhTenSinhVien(struct SinhVien *sv1, struct SinhVien *sv2) {
+int soSanhTenSinhVien(SinhVien *sv1, SinhVien *sv2) {
     char tenSV1[100], tenSV2[100];
     tachHoTen(sv1->ten, tenSV1);
     tachHoTen(sv2->ten, tenSV2);
     return strcasecmp(tenSV1, tenSV2);
 }
 
-// Hàm sắp xếp sinh viên theo tên
-void sapXepTheoTen(struct SinhVien a[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (soSanhTenSinhVien(&a[i], &a[j]) > 0) {
-                // Hoán đổi vị trí của hai sinh viên
-                struct SinhVien temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
-            }
+// Hàm đổi chỗ giữa hai sinh viên
+void swapSinhVien(SinhVien *a, SinhVien *b) {
+    struct SinhVien temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Hàm chia mảng theo pivot
+int Pivot(SinhVien a[], int low, int high) {
+    SinhVien pivot = a[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (soSanhTenSinhVien(&a[j], &pivot) <= 0) {
+            i++;
+            swapSinhVien(&a[i], &a[j]);
         }
     }
+
+    swapSinhVien(&a[i + 1], &a[high]);
+    return i + 1;
+}
+
+// Hàm sắp xếp Quick Sort
+void quickSort(SinhVien a[], int low, int high) {
+    if (low < high) {
+        int pivot = Pivot(a, low, high);
+
+        quickSort(a, low, pivot - 1);
+        quickSort(a, pivot + 1, high);
+    }
+}
+
+// Hàm sắp xếp sinh viên theo tên bằng Quick Sort
+void sapXepTheoTen(SinhVien a[], int n) {
+    quickSort(a, 0, n - 1);
 }
 
 // xuat danh sach sinh vien ra file   
@@ -140,8 +164,8 @@ void xuatFile(SinhVien *x, int n) {
     printf("Da xuat danh sach sinh vien ra file\n");
     FILE *outputFile = fopen("danhSachSinhVien.txt", "w");
     if (outputFile) {
-        fprintf(outputFile, "\t\t\t Danh sach sinh vien \t\t\n");
-        fprintf(outputFile, "STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+        fprintf(outputFile, "\t\t\t DANH SACH SINH VIEN \t\t\n");
+        fprintf(outputFile, "STT\tHO VA TEN\t        MA SINH VIEN\tEMAIL\t                        GIOI TINH\tLOP\t        GPA\tNGAY THANG NAM SINH \t DIA CHI\n");
 
         for (int i = 0; i < n; i++) {
             tinh_BMI(&x[i]);
@@ -171,7 +195,7 @@ void timKiemTheoTen(SinhVien a[], int n, char name[]) {
         // Su dung strstr de kiem tra tên có xuat hien trong tên sinh viên không
         if (strstr(temp, name) != NULL) {
             if (!find) {
-                printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+                printf("STT\tHO VA TEN\t        MA SINH VIEN\tEMAIL\t                        GIOI TINH\tLOP\t        GPA\tNGAY THANG NAM SINH \t DIA CHI\n");
             }
             printf("%d", i + 1);
             in(&a[i], n);
@@ -189,7 +213,7 @@ void timKiemTheoMaSV(SinhVien a[], int n, char ID[])
     int find = 0;
     for (int i = 0; i < n; i++) {
         if (strcmp(ID, a[i].maSV) == 0) {
-            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+            printf("STT\tHO VA TEN\t        MA SINH VIEN\tEMAIL\t                        GIOI TINH\tLOP\t        GPA\tNGAY THANG NAM SINH \t DIA CHI\n");
             printf("%d", i + 1);
             in(&a[i], n);
             find = 1;
@@ -219,19 +243,45 @@ void xoaThongTin(SinhVien a[], int* n, char ID[]) {
     }
 }
 
-//Sap xep sinh vien theo gpa giam dan
-void sapXepTheoGPA(SinhVien a[], int n)
-{
-    for (int i = 0; i < n; i++) {
-        int max = i;
-        for (int j = i + 1; j < n; j++) {
-            if (a[max].gpa < a[j].gpa)
-                max = j;
+// Hàm so sánh GPA của hai sinh viên
+int soSanhGPA(struct SinhVien *sv1, struct SinhVien *sv2) {
+    if (sv1->gpa > sv2->gpa)
+        return 1; // sv1 có GPA cao hơn sv2
+    else if (sv1->gpa < sv2->gpa)
+        return -1; // sv1 có GPA thấp hơn sv2
+    else
+        return 0; // sv1 và sv2 có cùng GPA
+}
+
+// Hàm chia mảng theo pivot dựa trên GPA
+int partitionGPA(SinhVien a[], int low, int high) {
+    SinhVien pivot = a[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (soSanhGPA(&a[j], &pivot) > 0) {
+            i++;
+            swapSinhVien(&a[i], &a[j]);
         }
-        SinhVien temp = a[max];
-        a[max] = a[i];
-        a[i] = temp;
     }
+
+    swapSinhVien(&a[i + 1], &a[high]);
+    return i + 1;
+}
+
+// Hàm sắp xếp Quick Sort theo GPA
+void pivotGPA(SinhVien a[], int low, int high) {
+    if (low < high) {
+        int pivot = partitionGPA(a, low, high);
+
+        pivotGPA(a, low, pivot - 1);
+        pivotGPA(a, pivot + 1, high);
+    }
+}
+
+// Hàm sắp xếp sinh viên theo GPA từ cao xuống thấp bằng Quick Sort
+void sapXepTheoGPA(SinhVien a[], int n) {
+    pivotGPA(a, 0, n - 1);
     printf("Danh sach sinh vien da duoc sap xep theo GPA tu cao xuong thap. \n");
 }
 
@@ -254,7 +304,7 @@ void nhapThemThongTin(SinhVien* x)
         strcpy(x->gioiTinh, "Nam");
     } else if (gt == 2) {
         strcpy(x->gioiTinh, "Nu");
-    }
+    } else printf("Nhap khong hop le, vui long nhap lai !!\n");
     getchar();
     printf("Lop: "); gets(x->lop);
     printf("GPA: "); scanf("%lf", &x->gpa);
@@ -333,20 +383,26 @@ int main()
         else if (lc_class == 0) {
             break;
         }
-                    while (1) {
-        printf("\n\t    --DO AN LAP TRINH TINH TOAN--\t\t\t\n");
-        printf("THUC HIEN BOI: LUONG VAN VO & NGUYEN DANG BAO NGUYEN\n\n");
-        printf("-----QUAN LY DANH SACH SINH VIEN-----\n");
+            while (1) {
+        printf("\nTRUONG DAI HOC BACH KHOA - DAI HOC DA NANG\n");
+        printf("         KHOA CONG NGHE THONG TIN\n");
+        printf("-----------------------------------------------\n");
+        printf("PBL1: DO AN LAP TRINH TINH TOAN\t\t\t\n");
+        printf("DE TAI: QUAN LY DANH SACH SINH VIEN\n");
+        printf("GIANG VIEN HUONG DAN: NGUYEN CONG DANH\n");
+        printf("SINH VIEN THUC HIEN: - LUONG VAN VO \n");
+        printf("                     - NGUYEN DANG BAO NGUYEN\n\n");
+        printf("-----QUAN LY DANH SACH SINH VIEN-------\n");
         printf("1. Cap ma sinh vien\n");
         printf("2. Cap email sinh vien\n");
         printf("3. Tim kiem sinh vien\n");
         printf("4. Xoa sinh vien theo ma sinh vien\n");
         printf("5. Sap xep sinh vien\n");
         printf("6. Hien thi danh sach sinh vien\n");
-        printf("7. Nhap them thong tin sinh vien \n");
+        printf("7. Nhap them thong tin sinh vien\n");
         printf("8. Xuat file danh sach sinh vien\n");
-        printf("0. Thoat !\n");
-        printf("--------------------------------------\n\n");
+        printf("0. Thoat !                      \n");
+        printf("---------------------------------------\n\n");
         printf("Nhap lua chon: ");
         int lc; 
         scanf("%d", &lc);
@@ -481,8 +537,8 @@ int main()
             }  
         }
         if (temp == 0) {
-            printf("\t\t\tDanh sach sinh vien\t\t\t\n");
-            printf("STT\tHo va ten\t        Ma sinh vien\tEmail\t                        Gioi tinh\tLop\t        GPA\tNgay thang nam sinh \t Dia chi\n");
+            printf("\t\t\t DANH SACH SINH VIEN\t\t\t\n");
+            printf("STT\tHO VA TEN\t        MA SINH VIEN\tEMAIL\t                        GIOI TINH\tLOP\t        GPA\tNGAY THANG NAM SINH \t DIA CHI\n");
             for (int i = 0; i < n; i++) {
                 printf("%d", i + 1);
                 in(&a[i], n);
@@ -498,8 +554,8 @@ int main()
             }  
         }
          if (temp == 0){
-                printf("\t\tThong tin suc khoe sinh vien\t\t\t\n");
-                printf("STT\tHo va ten\t        Ma sinh vien\tGioi tinh\tLop\t    Ngay thang nam sinh\t   Chieu cao\t Can nang \t BMI\n");
+                printf("\t\tTHONG TIN SUC KHOE SINH VIEN\t\t\t\n");
+                printf("STT\tHO VA TEN\t        MA SINH VIEN\tGIOI TINH\tLOP\t    NGAY THANG NAM SINH\t   CHIEU CAO\t CAN NANG \t BMI\n");
                 for (int i = 0; i < n; i++) {
                     printf("%d", i + 1);
                     inSucKhoe(&a[i], n);
@@ -519,8 +575,17 @@ int main()
          if (temp == 0){
             SinhVien newStudent;
             printf("Nhap vao thong tin cua sinh vien \n");
-            nhapThemThongTin(&newStudent);
-            a[n++] = newStudent;
+            int soLuongSvCanThem;
+            printf("Nhap so luong sinh vien can them: ");
+            scanf("%d", &soLuongSvCanThem);
+            printf("\n");
+            for (int i = 0; i < soLuongSvCanThem; i++) {
+                printf("Thong tin sinh vien thu %d\n", i + 1);
+                nhapThemThongTin(&newStudent);
+                a[n++] = newStudent;
+                printf("\n");
+            }
+            printf("\nDa them %d sinh vien vao lop.\n", soLuongSvCanThem);
           }    
         }
         else if (lc == 8) {
@@ -539,6 +604,7 @@ int main()
         else if (lc == 0) {
             break;
         }
+        else printf("Nhap khong hop le, vui long nhap lai!!!\n");
           }
             }
              }
