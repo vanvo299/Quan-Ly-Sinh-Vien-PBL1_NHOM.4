@@ -20,12 +20,16 @@ void toLowerCase(char str[]) {
 
 void timKiemTheoTen(SinhVien a[], int n, char name[]) {
     int find = 0;
+        char tmpTen[50];
+        strcpy(tmpTen, name);
+        toLowerCase(tmpTen);
+        
     for (int i = 0; i < n; i++) {
-        char temp[200];
-        strcpy(temp, a[i].ten);
-        toLowerCase(temp);
+        char tmpName[50];
+        strcpy(tmpName, a[i].ten);
+        toLowerCase(tmpName);
         // Su dung strstr de kiem tra tên có xuat hien trong tên sinh viên không
-        if (strstr(temp, name) != NULL) {
+        if (strstr(tmpName, tmpTen) != NULL) {
             if (!find) {
                 printf("STT\tHO VA TEN\t        MA SINH VIEN\tEMAIL\t                        GIOI TINH\tLOP\t        GPA\tNGAY THANG NAM SINH \t DIA CHI\n");
             }
