@@ -590,7 +590,7 @@ int main()
             int temp = 0;
             for (int i = 0; i < n; i++) {
             if ((strlen(a[i].maSV) == 0)|| (strlen(a[i].email)) == 0) {
-            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email truoc khi xuat danh sach\n");
+            printf("Ma sinh vien hoac email chua duoc cap, vui long cap ma sinh vien hoac email cho lop truoc khi nhap them sinh vien.\n");
             temp = 1;
             break;
             }  
