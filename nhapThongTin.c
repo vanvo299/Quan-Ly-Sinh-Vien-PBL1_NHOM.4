@@ -76,6 +76,12 @@ void nhapThemThongTin(SinhVien* x)
     getchar();
     printf("Lop: "); gets(x->lop);
     printf("GPA: "); scanf("%lf", &x->gpa);
+    if (x->gpa < 0 || x->gpa > 4.0) {    
+        while(x->gpa < 0 || x->gpa > 4.0) {
+            printf("Nhap GPA khong hop le, 0 <= GPA <= 4 !!\n");
+            printf("GPA: "); scanf("%lf", &x->gpa);
+        }
+    }
     printf("Can nang (kg): "); scanf("%lf", &x->canNang);
     printf("Chieu cao (cm): "); scanf("%lf", &x->chieuCao);
     getchar();
