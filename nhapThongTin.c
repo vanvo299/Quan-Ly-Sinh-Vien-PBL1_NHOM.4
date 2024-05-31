@@ -67,12 +67,18 @@ void nhapThemThongTin(SinhVien* x)
     printf("Ho va ten sinh vien: "); gets(x->ten);
     printf("Chon gioi tinh: ");
     int gt;
-    printf("1. Nam    2. Nu (Nhap 1 hoac 2): "); scanf("%d", &gt);
-    if (gt == 1) {
-        strcpy(x->gioiTinh, "Nam");
-    } else if (gt == 2) {
-        strcpy(x->gioiTinh, "Nu");
-    } else printf("Nhap khong hop le, vui long nhap lai !!\n");
+    printf("1. Nam    2. Nu (Nhap 1 hoac 2): ");
+   do {
+        scanf("%d", &gt);
+        if (gt == 1) {
+            strcpy(x->gioiTinh, "Nam");
+        } else if (gt == 2) {
+            strcpy(x->gioiTinh, "Nu");
+        } else {
+            printf("Gioi tinh khong hop le, vui long nhap lai: ");
+            printf("1. Nam    2. Nu (Nhap 1 hoac 2): ");
+        }
+    } while (gt != 1 && gt != 2);
     getchar();
     printf("Lop: "); gets(x->lop);
     printf("GPA: "); scanf("%lf", &x->gpa);
