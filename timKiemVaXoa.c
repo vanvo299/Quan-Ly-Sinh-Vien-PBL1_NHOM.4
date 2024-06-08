@@ -60,7 +60,8 @@ void timKiemTheoMaSV(SinhVien a[], int n, char ID[]) {
     int left = 0, right = n - 1;
     
     while (left <= right) {
-        int mid = left + (right - left) / 2;
+        int mid = (left + right) / 2; 
+
         
         int cmp = strcmp(ID, a[mid].maSV);
         
